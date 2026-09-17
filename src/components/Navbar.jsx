@@ -21,7 +21,8 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
+      // Navbar only shows when scrolled down past the intro globe screen
+      setIsScrolled(window.scrollY > 80);
 
       const sections = ['home', 'about', 'projects', 'skills-experience', 'certificates-resume', 'contact'];
       const scrollPosition = window.scrollY + 180;
@@ -40,6 +41,7 @@ export default function Navbar() {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -47,13 +49,14 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 transform ${
         isScrolled
-          ? 'bg-[#06020e]/90 backdrop-blur-xl border-b py-3 shadow-[0_4px_30px_rgba(0,0,0,0.8)]'
-          : 'bg-transparent py-5'
+          ? 'translate-y-0 opacity-100 backdrop-blur-xl border-b py-3 shadow-[0_4px_30px_rgba(0,0,0,0.8)] pointer-events-auto'
+          : '-translate-y-full opacity-0 pointer-events-none py-3'
       }`}
       style={{
-        borderBottomColor: isScrolled ? currentTheme.border : 'transparent',
+        backgroundColor: `${currentTheme.bg}f0`,
+        borderBottomColor: currentTheme.border,
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -86,7 +89,10 @@ export default function Navbar() {
         </a>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-1 bg-[#14062c]/70 backdrop-blur-md px-3 py-1.5 rounded-full border shadow-inner" style={{ borderColor: currentTheme.border }}>
+        <nav
+          className="hidden lg:flex items-center gap-1 bg-[#14062c]/70 backdrop-blur-md px-3 py-1.5 rounded-full border shadow-inner"
+          style={{ borderColor: currentTheme.border }}
+        >
           {navLinks.map((link) => {
             const isActive = activeSection === link.href.substring(1);
             return (
@@ -179,7 +185,8 @@ export default function Navbar() {
         <div className="flex lg:hidden items-center gap-2">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl bg-purple-950/60 border border-pink-500/30 text-white focus:outline-none"
+            className="p-2 rounded-xl bg-purple-950/60 border text-white focus:outline-none"
+            style={{ borderColor: currentTheme.border }}
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -189,7 +196,10 @@ export default function Navbar() {
 
       {/* Mobile dropdown menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#0a0316]/98 backdrop-blur-2xl border-b px-4 pt-4 pb-6 mt-3 animate-fadeIn" style={{ borderColor: currentTheme.border }}>
+        <div
+          className="lg:hidden bg-[#0a0316]/98 backdrop-blur-2xl border-b px-4 pt-4 pb-6 mt-3 animate-fadeIn"
+          style={{ borderColor: currentTheme.border }}
+        >
           <div className="flex flex-col space-y-2">
             {navLinks.map((link) => {
               const isActive = activeSection === link.href.substring(1);

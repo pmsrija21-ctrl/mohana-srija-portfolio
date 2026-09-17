@@ -1,18 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Palette, Check, Sparkles, X } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
 export default function ThemeSwitcher() {
   const { currentTheme, setTheme, themes, currentThemeId } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Only show floating button when scrolled down to avoid covering 'Scroll to Begin'
+      setIsScrolled(window.scrollY > 300);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  if (!isScrolled) return null;
 
   return (
     <>
       {/* Floating Theme Switcher Pill in Bottom-Right */}
-      <div className="fixed bottom-6 right-6 z-50 select-none">
+      <div className="fixed bottom-6 right-6 z-50 select-none animate-fadeIn">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#0a0316]/90 hover:bg-[#14062a] border border-pink-400/50 text-pink-300 hover:text-white shadow-[0_0_25px_rgba(236,72,153,0.45)] backdrop-blur-xl transition-all duration-300 transform hover:scale-105 active:scale-95 group font-mono text-xs"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#0a0316]/95 hover:bg-[#14062a] border text-white shadow-2xl backdrop-blur-xl transition-all duration-300 transform hover:scale-105 active:scale-95 group font-mono text-xs"
           style={{
             borderColor: currentTheme.primary,
             boxShadow: `0 0 20px ${currentTheme.glow}`,
