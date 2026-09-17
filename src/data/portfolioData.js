@@ -1,4 +1,3 @@
-// Source of Truth strictly extracted from Mohana Srija Puram's Resume
 export const portfolioData = {
   "personal": {
     "name": "Mohana Srija Puram",
@@ -112,7 +111,19 @@ export const portfolioData = {
         "Centralized administrative analytics dashboard tracking incident resolution"
       ],
       "badge": "AI Agent Platform",
-      "accent": "cyan"
+      "accent": "cyan",
+      "tech": [
+        "Flask",
+        "MongoDB",
+        "Groq Llama 3",
+        "Twilio WhatsApp",
+        "Interactive Maps",
+        "Two-Factor Auth"
+      ],
+      "description": "AI-powered disaster management platform for real-time disaster analysis and response, featuring AI agents for severity assessment, resource allocation and route optimization.",
+      "live": "https://disaster-response-system-rta2.onrender.com/login",
+      "problem": "Disaster management agencies struggle with fragmented sensor data, slow evacuation planning, and communication blackouts during severe climate events.",
+      "solution": "Engineered a multi-agent AI system with Groq Llama 3, automated WhatsApp SOS alerts, and live GIS maps to coordinate emergency response in real time."
     },
     {
       "id": "weather-travel-planner",
@@ -144,7 +155,22 @@ export const portfolioData = {
         "Responsive dark mode interface with persistent search history caching"
       ],
       "badge": "MERN Stack Application",
-      "accent": "purple"
+      "accent": "purple",
+      "tech": [
+        "MongoDB",
+        "Express",
+        "React",
+        "Node.js",
+        "OpenAI API",
+        "JWT",
+        "bcrypt",
+        "Recharts",
+        "Framer Motion"
+      ],
+      "description": "Full-stack travel planning application with live weather lookup by city or GPS and a 5-day forecast visualized using Recharts.",
+      "live": "https://weather-travel-planner-client-qmsi.onrender.com/",
+      "problem": "Travelers lack unified itinerary tools that synthesize real-time meteorological conditions, activity forecasts, and destination planning into one interface.",
+      "solution": "Architected a full-stack MERN application integrating OpenWeatherMap APIs, interactive map routing, and personalized travel schedule generation."
     },
     {
       "id": "hamiltonian-cycle",
@@ -174,7 +200,19 @@ export const portfolioData = {
         "Pre-configured standard graph presets alongside custom graph creation"
       ],
       "badge": "Backtracking Visualizer",
-      "accent": "blue"
+      "accent": "blue",
+      "tech": [
+        "HTML5",
+        "CSS3",
+        "JavaScript",
+        "Graph Theory",
+        "Backtracking",
+        "State-Space Tree"
+      ],
+      "description": "Interactive web application visualizing the Hamiltonian Cycle problem using backtracking, with live graph rendering, dynamic adjacency matrix, and state-space tree.",
+      "live": "https://hamiltonian-cycle.onrender.com",
+      "problem": "Complex NP-complete graph traversal problems are notoriously difficult to understand and analyze through static algorithms and text explanations.",
+      "solution": "Created an interactive step-by-step backtracking visualizer with state-space tree traversal, branch pruning demonstrations, and custom graph generation."
     },
     {
       "id": "bridge-crossing",
@@ -191,7 +229,7 @@ export const portfolioData = {
       ],
       "techSummary": "HTML | CSS | JavaScript",
       "github": "https://github.com/purammohanasrija-arch/Bridge-Crossing",
-      "liveDemo": null,
+      "liveDemo": "",
       "architecture": "Event-driven mathematical simulation environment modeling optimal resource scheduling under torch-sharing constraints. Uses a greedy optimization algorithm to minimize cumulative travel duration across a river gorge with interactive physics-inspired CSS animations and synthetic audio feedback.",
       "features": [
         "Greedy algorithm optimization to find minimal total bridge-crossing time",
@@ -203,7 +241,19 @@ export const portfolioData = {
         "Educational step-by-step breakdown illustrating greedy algorithm trade-offs"
       ],
       "badge": "Greedy Algorithm Simulation",
-      "accent": "emerald"
+      "accent": "emerald",
+      "tech": [
+        "HTML5",
+        "CSS3",
+        "JavaScript",
+        "Greedy Algorithms",
+        "Web Audio API",
+        "CSS Keyframes"
+      ],
+      "description": "Interactive simulation of the Bridge Crossing problem using a greedy strategy, with real-time animations, timer tracking, and movement logs.",
+      "live": "",
+      "problem": "Optimizing torch-crossing under variable transit speeds presents non-intuitive mathematical tradeoffs between greedy and alternate strategy paradigms.",
+      "solution": "Engineered an algorithmic visualizer that dynamically compares greedy vs alternative mathematical approaches with timeline playback and state traces."
     }
   ],
   "skills": {
@@ -488,5 +538,59 @@ export const portfolioData = {
       "file": "./certificates/unified-mentor-offer-letter.pdf",
       "skills": "Professional Software Mentorship & Project Development"
     }
-  ]
+  ],
+  "timeline": [
+    {
+      "id": "vignan",
+      "step": "01",
+      "title": "B.Tech in Computer Science & Engineering",
+      "role": "Student & Aspiring AI Developer",
+      "period": "2024 - 2028 (Expected)",
+      "location": "Vignan's University, Guntur",
+      "desc": "Focusing on Data Structures, Algorithms, Full-Stack MERN Architecture, and Machine Learning systems. Current CGPA: 8.15 / 10."
+    },
+    {
+      "id": "prodigy",
+      "step": "02",
+      "title": "Web Development Intern",
+      "role": "Frontend / MERN Intern",
+      "period": "Aug 2024 - Sep 2024",
+      "location": "Prodigy InfoTech (Virtual)",
+      "desc": "Engineered real-time responsive web interfaces, interactive weather planning portals using REST APIs, and dynamic single-page applications."
+    },
+    {
+      "id": "codealpha",
+      "step": "03",
+      "title": "Software Development Intern (App Development)",
+      "role": "App & Full-Stack Intern",
+      "period": "Sep 2024 - Oct 2024",
+      "location": "CodeAlpha (Virtual)",
+      "desc": "Developed Fitness Tracker and Language Learning applications using Python, Flask, and SQLite with persistent analytics and modular routing."
+    },
+    {
+      "id": "chess",
+      "step": "04",
+      "title": "National Event Coordinator",
+      "role": "62nd National Chess Championship",
+      "period": "2025",
+      "location": "National Level Tournament",
+      "desc": "Coordinated event operations, logistics management, and player match-scheduling for national grandmasters and competitors."
+    },
+    {
+      "id": "unifiedmentor",
+      "step": "05",
+      "title": "Software Developer Intern (Upcoming)",
+      "role": "Incoming Intern",
+      "period": "Joining 2026",
+      "location": "Unified Mentor",
+      "desc": "Selected for advanced full-stack software development, architectural design, and industrial software engineering."
+    }
+  ],
+  "stats": {
+    "cgpa": "8.15",
+    "degree": "B.Tech CSE, Vignan Univ",
+    "internships": "3",
+    "certifications": "11+",
+    "projects": "4"
+  }
 };

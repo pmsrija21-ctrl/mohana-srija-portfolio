@@ -1,0 +1,5 @@
+2026/09/17-22:26:49.555 8ba8 Creating DB c:\Users\Asus\OneDrive\Desktop\srija\.edge_test_profile\Default\EdgeCoupons/coupons_data.db since it was missing.
+2026/09/17-22:26:49.608 8ba8 Reusing MANIFEST c:\Users\Asus\OneDrive\Desktop\srija\.edge_test_profile\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/09/17-22:26:49.895 46ac Level-0 table #5: started
+2026/09/17-22:26:49.898 46ac Level-0 table #5: 683273 bytes OK
+2026/09/17-22:26:49.901 46ac Delete type=0 #3
