@@ -1,3 +1,4 @@
+import profilePhoto from '../assets/mohana-srija.jpg';
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Download, ExternalLink, Sparkles, Palette, Check } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
@@ -66,17 +67,17 @@ export default function Navbar() {
           className="flex items-center gap-3 group focus:outline-none rounded-lg p-1"
         >
           <div
-            className="w-10 h-10 rounded-xl p-[1px] transition-all"
+            className="w-10 h-10 rounded-xl p-[1.5px] transition-all shrink-0"
             style={{
               background: `linear-gradient(135deg, ${currentTheme.primary}, ${currentTheme.secondary})`,
               boxShadow: `0 0 15px ${currentTheme.glow}`,
             }}
           >
-            <div className="w-full h-full bg-[#0c041c] rounded-[11px] flex items-center justify-center">
-              <span className="font-extrabold text-sm tracking-wider text-white">
-                MSP
-              </span>
-            </div>
+            <img
+              src={profilePhoto}
+              alt="Mohana Srija"
+              className="w-full h-full object-cover object-top rounded-[10px]"
+            />
           </div>
           <div className="flex flex-col">
             <span className="text-base font-bold tracking-tight text-white transition-colors">

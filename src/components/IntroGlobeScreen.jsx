@@ -1,3 +1,4 @@
+import profilePhoto from '../assets/mohana-srija.jpg';
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, Palette, Check } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
@@ -21,9 +22,24 @@ export default function IntroGlobeScreen() {
     <div className="relative min-h-screen flex flex-col justify-between items-center px-4 sm:px-8 lg:px-12 py-8 sm:py-10 overflow-hidden select-none">
       {/* Top Header Bar from Storyboard Slide 1 */}
       <div className="w-full max-w-7xl mx-auto flex items-center justify-between text-xs font-mono text-slate-400 z-20">
-        <span className="text-white font-bold tracking-widest text-sm sm:text-base">
-          Mohana Srija Puram
-        </span>
+        <div className="flex items-center gap-3">
+          <div
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full p-[1.5px] shrink-0"
+            style={{
+              background: `linear-gradient(135deg, ${currentTheme.primary}, ${currentTheme.secondary})`,
+              boxShadow: `0 0 12px ${currentTheme.glow}`,
+            }}
+          >
+            <img
+              src={profilePhoto}
+              alt="Mohana Srija Puram"
+              className="w-full h-full object-cover object-top rounded-full"
+            />
+          </div>
+          <span className="text-white font-bold tracking-widest text-sm sm:text-base">
+            Mohana Srija Puram
+          </span>
+        </div>
 
         {/* Right side of Top Bar: Theme Switcher & Loading Pulse */}
         <div className="flex items-center gap-4">

@@ -2,7 +2,7 @@ import React from 'react';
 import { ArrowRight, Download } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './SocialIcons';
 import { portfolioData } from '../data/portfolioData';
-import CosmicSilhouette from './CosmicSilhouette';
+import CosmicPortrait from './CosmicPortrait';
 
 export default function HeroSection() {
   const { personal } = portfolioData;
@@ -89,7 +89,7 @@ export default function HeroSection() {
 
           {/* Right Hero Column: Cosmic Silhouette Artwork */}
           <div className="lg:col-span-5 flex items-center justify-center">
-            <CosmicSilhouette />
+            <CosmicPortrait />
           </div>
         </div>
       </div>

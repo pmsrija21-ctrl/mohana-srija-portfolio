@@ -12,7 +12,8 @@ export const portfolioData = {
     "resumePath": "./resume/Mohana-Srija-Puram-Resume.pdf",
     "bio": "Motivated third-year Computer Science Engineering student with a strong foundation in programming, data structures, and full-stack development, and a growing focus on machine learning and AI-driven applications. Seeking opportunities to apply technical and problem-solving skills to real-world projects, deepen ML expertise, and gain industry experience.",
     "tagline": "Turning Ideas into Real-World Solutions",
-    "subTagline": "Better Ideas. Brighter Future."
+    "subTagline": "Better Ideas. Brighter Future.",
+    "profileImage": "./mohana-srija.jpg"
   },
   "quickStats": [
     {

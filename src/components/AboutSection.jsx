@@ -1,3 +1,4 @@
+import profilePhoto from '../assets/mohana-srija.jpg';
 import React from 'react';
 import { School, CheckCircle2 } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
@@ -20,11 +21,22 @@ export default function AboutSection() {
             <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none" />
 
             <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-2.5 h-8 bg-gradient-to-b from-cyan-400 to-purple-500 rounded-full" />
-                <h3 className="text-xl sm:text-2xl font-bold text-white">
-                  About Me
-                </h3>
+              <div className="flex items-center gap-4 mb-6">
+                <div className="relative w-12 h-12 rounded-full p-[2px] bg-gradient-to-tr from-pink-500 to-purple-600 shadow-md">
+                  <img
+                    src={profilePhoto}
+                    alt="Mohana Srija Puram"
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight">
+                    About Me
+                  </h3>
+                  <span className="text-[11px] font-mono text-purple-300">
+                    Mohana Srija Puram • Software Engineer
+                  </span>
+                </div>
               </div>
 
               <div className="space-y-4 text-slate-300 text-sm leading-relaxed">

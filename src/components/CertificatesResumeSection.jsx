@@ -1,3 +1,4 @@
+import profilePhoto from '../assets/mohana-srija.jpg';
 import React, { useState, useEffect } from 'react';
 import { Award, Download, ExternalLink, ChevronLeft, ChevronRight, FileText, CheckCircle2, ShieldCheck, Sparkles, RotateCw } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
@@ -161,8 +162,8 @@ export default function CertificatesResumeSection() {
               >
                 <div>
                   <div className="flex items-center gap-2 mb-3 border-b border-pink-200 pb-2">
-                    <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-pink-600 to-purple-600 text-white flex items-center justify-center font-bold text-xs">
-                      MS
+                    <div className="w-7 h-7 rounded-full overflow-hidden border border-pink-400/50 shadow-sm shrink-0">
+                      <img src={profilePhoto} alt="Mohana Srija" className="w-full h-full object-cover object-top" />
                     </div>
                     <div>
                       <p className="text-xs font-bold leading-tight">Mohana Srija Puram</p>
