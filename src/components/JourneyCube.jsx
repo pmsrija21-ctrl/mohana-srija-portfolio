@@ -1,12 +1,38 @@
-import React, { useState, useRef } from 'react';
-import { Code2, Briefcase, Award, Sparkles, Move3d } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Code2, Briefcase, Award, Sparkles, Move3d, RotateCw } from 'lucide-react';
 
 export default function JourneyCube() {
   const [rotX, setRotX] = useState(-15);
   const [rotY, setRotY] = useState(25);
+  const [isAutoRotating, setIsAutoRotating] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const startPos = useRef({ x: 0, y: 0 });
+  const animFrameRef = useRef(null);
+  const lastTimeRef = useRef(performance.now());
 
+  // Continuous 3D auto-rotation loop
+  useEffect(() => {
+    const loop = (currentTime) => {
+      const delta = (currentTime - lastTimeRef.current) / 1000;
+      lastTimeRef.current = currentTime;
+
+      if (isAutoRotating && !isDragging && !isHovered) {
+        setRotY((prev) => (prev + delta * 24) % 360);
+        setRotX(-14 + Math.sin(currentTime * 0.0015) * 6);
+      }
+      animFrameRef.current = requestAnimationFrame(loop);
+    };
+
+    lastTimeRef.current = performance.now();
+    animFrameRef.current = requestAnimationFrame(loop);
+
+    return () => {
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+    };
+  }, [isAutoRotating, isDragging, isHovered]);
+
+  // Mouse Drag handlers
   const handleMouseDown = (e) => {
     setIsDragging(true);
     startPos.current = { x: e.clientX, y: e.clientY };
@@ -16,30 +42,64 @@ export default function JourneyCube() {
     if (!isDragging) return;
     const dx = e.clientX - startPos.current.x;
     const dy = e.clientY - startPos.current.y;
-    setRotY((prev) => prev + dx * 0.5);
-    setRotX((prev) => Math.max(-60, Math.min(60, prev - dy * 0.5)));
+    setRotY((prev) => prev + dx * 0.6);
+    setRotX((prev) => Math.max(-60, Math.min(60, prev - dy * 0.6)));
     startPos.current = { x: e.clientX, y: e.clientY };
   };
 
   const handleMouseUp = () => setIsDragging(false);
+
+  // Touch Swipe handlers for mobile
+  const handleTouchStart = (e) => {
+    if (e.touches.length === 1) {
+      setIsDragging(true);
+      startPos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging || e.touches.length !== 1) return;
+    const dx = e.touches[0].clientX - startPos.current.x;
+    const dy = e.touches[0].clientY - startPos.current.y;
+    setRotY((prev) => prev + dx * 0.7);
+    setRotX((prev) => Math.max(-60, Math.min(60, prev - dy * 0.7)));
+    startPos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  };
+
+  const handleTouchEnd = () => setIsDragging(false);
 
   return (
     <div className="mt-20 text-center select-none">
       <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-2">
         Explore My Journey
       </h3>
-      <p className="text-slate-400 text-xs sm:text-sm mb-10 font-mono flex items-center justify-center gap-1.5">
-        <Move3d className="w-4 h-4 text-cyan-400" />
-        <span>Drag to explore</span>
-      </p>
+
+      <div className="flex items-center justify-center gap-3 mb-10 text-xs font-mono text-slate-400">
+        <span className="flex items-center gap-1 text-cyan-300">
+          <RotateCw className="w-3.5 h-3.5 animate-spin" style={{ animationDuration: '8s' }} />
+          <span>Auto-Rotating 3D Cube</span>
+        </span>
+        <span>•</span>
+        <span className="flex items-center gap-1 text-purple-300">
+          <Move3d className="w-3.5 h-3.5" />
+          <span>Drag or Swipe to spin freely</span>
+        </span>
+      </div>
 
       {/* 3D Interactive Rotating Cube on Glowing Circular Pedestal matching Slide 4 */}
       <div
-        className="relative w-72 h-72 mx-auto cursor-grab active:cursor-grabbing flex items-center justify-center"
+        className="relative w-72 h-72 mx-auto cursor-grab active:cursor-grabbing flex items-center justify-center touch-none"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
+        onMouseLeave={() => {
+          handleMouseUp();
+          setIsHovered(false);
+        }}
+        onMouseEnter={() => setIsHovered(true)}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         style={{ perspective: '1000px' }}
       >
         {/* The 3D Cube Container */}
@@ -52,7 +112,7 @@ export default function JourneyCube() {
         >
           {/* Front Face: Projects */}
           <div
-            className="absolute inset-0 rounded-2xl bg-[#080d24]/90 border-2 border-cyan-400/80 p-4 flex flex-col items-center justify-center text-cyan-300 shadow-[0_0_20px_rgba(0,240,255,0.4)] backdrop-blur-md"
+            className="absolute inset-0 rounded-2xl bg-[#080d24]/95 border-2 border-cyan-400/80 p-4 flex flex-col items-center justify-center text-cyan-300 shadow-[0_0_25px_rgba(0,240,255,0.5)] backdrop-blur-md"
             style={{ transform: 'translateZ(80px)' }}
           >
             <Code2 className="w-8 h-8 mb-2 text-cyan-300" />
@@ -62,7 +122,7 @@ export default function JourneyCube() {
 
           {/* Right Face: Experience */}
           <div
-            className="absolute inset-0 rounded-2xl bg-[#140a28]/90 border-2 border-purple-400/80 p-4 flex flex-col items-center justify-center text-purple-300 shadow-[0_0_20px_rgba(168,85,247,0.4)] backdrop-blur-md"
+            className="absolute inset-0 rounded-2xl bg-[#140a28]/95 border-2 border-purple-400/80 p-4 flex flex-col items-center justify-center text-purple-300 shadow-[0_0_25px_rgba(168,85,247,0.5)] backdrop-blur-md"
             style={{ transform: 'rotateY(90deg) translateZ(80px)' }}
           >
             <Briefcase className="w-8 h-8 mb-2 text-purple-300" />
@@ -72,7 +132,7 @@ export default function JourneyCube() {
 
           {/* Back Face: Skills */}
           <div
-            className="absolute inset-0 rounded-2xl bg-[#041624]/90 border-2 border-sky-400/80 p-4 flex flex-col items-center justify-center text-sky-300 shadow-[0_0_20px_rgba(56,189,248,0.4)] backdrop-blur-md"
+            className="absolute inset-0 rounded-2xl bg-[#041624]/95 border-2 border-sky-400/80 p-4 flex flex-col items-center justify-center text-sky-300 shadow-[0_0_25px_rgba(56,189,248,0.5)] backdrop-blur-md"
             style={{ transform: 'rotateY(180deg) translateZ(80px)' }}
           >
             <Sparkles className="w-8 h-8 mb-2 text-sky-300" />
@@ -82,7 +142,7 @@ export default function JourneyCube() {
 
           {/* Left Face: Certificates */}
           <div
-            className="absolute inset-0 rounded-2xl bg-[#1a0822]/90 border-2 border-pink-400/80 p-4 flex flex-col items-center justify-center text-pink-300 shadow-[0_0_20px_rgba(236,72,153,0.4)] backdrop-blur-md"
+            className="absolute inset-0 rounded-2xl bg-[#1a0822]/95 border-2 border-pink-400/80 p-4 flex flex-col items-center justify-center text-pink-300 shadow-[0_0_25px_rgba(236,72,153,0.5)] backdrop-blur-md"
             style={{ transform: 'rotateY(-90deg) translateZ(80px)' }}
           >
             <Award className="w-8 h-8 mb-2 text-pink-300" />
@@ -92,7 +152,7 @@ export default function JourneyCube() {
 
           {/* Top Face */}
           <div
-            className="absolute inset-0 rounded-2xl bg-[#070b1e]/90 border-2 border-cyan-300/40 p-2 flex items-center justify-center text-cyan-200"
+            className="absolute inset-0 rounded-2xl bg-[#070b1e]/95 border-2 border-cyan-300/60 p-2 flex items-center justify-center text-cyan-200"
             style={{ transform: 'rotateX(90deg) translateZ(80px)' }}
           >
             <span className="text-xs font-mono font-bold">MSP 2026</span>
@@ -100,7 +160,7 @@ export default function JourneyCube() {
 
           {/* Bottom Face */}
           <div
-            className="absolute inset-0 rounded-2xl bg-[#070b1e]/90 border-2 border-purple-300/40"
+            className="absolute inset-0 rounded-2xl bg-[#070b1e]/95 border-2 border-purple-300/60"
             style={{ transform: 'rotateX(-90deg) translateZ(80px)' }}
           />
         </div>

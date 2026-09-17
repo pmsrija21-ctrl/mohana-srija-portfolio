@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Award, Download, ExternalLink, ChevronLeft, ChevronRight, FileText, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Award, Download, ExternalLink, ChevronLeft, ChevronRight, FileText, CheckCircle2, ShieldCheck, Sparkles, RotateCw } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 import CertificateModal from './CertificateModal';
 
@@ -7,6 +7,7 @@ export default function CertificatesResumeSection() {
   const { certifications, personal } = portfolioData;
   const [activeCertIndex, setActiveCertIndex] = useState(0);
   const [activeCertModal, setActiveCertModal] = useState(null);
+  const [isCarouselHovered, setIsCarouselHovered] = useState(false);
 
   const prevCert = () => {
     setActiveCertIndex((prev) => (prev === 0 ? certifications.length - 1 : prev - 1));
@@ -16,13 +17,26 @@ export default function CertificatesResumeSection() {
     setActiveCertIndex((prev) => (prev === certifications.length - 1 ? 0 : prev + 1));
   };
 
+  // Continuous auto-advance rotation every 4.5 seconds
+  useEffect(() => {
+    if (isCarouselHovered || activeCertModal) return;
+    const interval = setInterval(() => {
+      setActiveCertIndex((prev) => (prev === certifications.length - 1 ? 0 : prev + 1));
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [isCarouselHovered, activeCertModal, certifications.length]);
+
   return (
     <section id="certificates-resume" className="relative py-28 z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* ============================================================ */}
-        {/* STORYBOARD SLIDE 9: CERTIFICATES CAROUSEL */}
+        {/* STORYBOARD SLIDE 9: AUTO-ROTATING CERTIFICATES CAROUSEL */}
         {/* ============================================================ */}
-        <div className="mb-24">
+        <div
+          className="mb-24"
+          onMouseEnter={() => setIsCarouselHovered(true)}
+          onMouseLeave={() => setIsCarouselHovered(false)}
+        >
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono uppercase tracking-wider mb-2">
@@ -31,8 +45,12 @@ export default function CertificatesResumeSection() {
               <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
                 Certificates
               </h2>
-              <p className="text-slate-400 text-xs sm:text-sm mt-1 font-mono">
-                Verified skills. Real achievements.
+              <p className="text-slate-400 text-xs sm:text-sm mt-1 font-mono flex items-center gap-2">
+                <span>Verified skills. Real achievements.</span>
+                <span className="text-cyan-400 text-[11px] hidden sm:inline-flex items-center gap-1">
+                  <RotateCw className="w-3 h-3 animate-spin" style={{ animationDuration: '10s' }} />
+                  <span>Auto-cycling</span>
+                </span>
               </p>
             </div>
 
@@ -99,24 +117,21 @@ export default function CertificatesResumeSection() {
                     </div>
                   </div>
 
-                  <div className="pt-3 border-t border-slate-200 flex items-center justify-between">
+                  <div className="pt-4 border-t border-slate-200 flex items-center justify-between">
+                    <span className="text-xs font-mono text-slate-500">
+                      {cert.date}
+                    </span>
                     <button
                       onClick={() => setActiveCertModal(cert)}
-                      className="px-4 py-2 rounded-xl text-xs font-bold bg-[#070b19] text-cyan-300 hover:bg-slate-800 hover:text-white transition-all shadow-md flex items-center gap-1.5"
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 hover:bg-slate-800 text-white shadow-md transition-all group-hover:bg-purple-700"
                     >
                       <span>View Certificate</span>
-                      <ExternalLink className="w-3.5 h-3.5" />
+                      <ExternalLink className="w-3.5 h-3.5 text-cyan-400" />
                     </button>
-
-                    <a
-                      href={cert.file}
-                      download
-                      className="p-2 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-700 transition-all"
-                      title="Download PDF"
-                    >
-                      <Download className="w-4 h-4" />
-                    </a>
                   </div>
+
+                  {/* Reflective Ground Shadow */}
+                  <div className="absolute -bottom-6 left-4 right-4 h-4 bg-gradient-to-b from-cyan-400/20 to-transparent blur-md rounded-full pointer-events-none" />
                 </div>
               ))}
           </div>
@@ -139,7 +154,7 @@ export default function CertificatesResumeSection() {
             {/* Ambient Light Beam */}
             <div className="absolute top-0 left-1/4 w-40 h-full bg-gradient-to-b from-cyan-400/20 via-purple-500/10 to-transparent blur-3xl pointer-events-none transform -skew-x-12" />
 
-            {/* 3D Tilted Floating Resume Document Preview */}
+            {/* 3D Tilted Floating Resume Document Preview with subtle animated float & tilt */}
             <div className="relative flex flex-col items-center">
               <div
                 className="w-56 sm:w-64 aspect-[1/1.4] rounded-2xl bg-gradient-to-br from-white via-slate-100 to-slate-200 text-slate-900 p-5 shadow-[0_20px_50px_rgba(0,240,255,0.35)] border border-cyan-300 transform -rotate-3 hover:rotate-0 hover:scale-105 transition-all duration-500 flex flex-col justify-between"
