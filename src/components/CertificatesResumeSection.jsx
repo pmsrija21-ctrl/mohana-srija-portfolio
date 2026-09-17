@@ -1,190 +1,220 @@
 import React, { useState } from 'react';
-import { Award, Download, ExternalLink, FileText, CheckCircle2, ShieldCheck, Sparkles, BookOpen } from 'lucide-react';
+import { Award, Download, ExternalLink, ChevronLeft, ChevronRight, FileText, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 import CertificateModal from './CertificateModal';
 
 export default function CertificatesResumeSection() {
   const { certifications, personal } = portfolioData;
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [activeCert, setActiveCert] = useState(null);
+  const [activeCertIndex, setActiveCertIndex] = useState(0);
+  const [activeCertModal, setActiveCertModal] = useState(null);
 
-  const categories = ['All', 'Cisco', 'Tata', 'Unstop', 'NPTEL', 'Internships'];
+  const prevCert = () => {
+    setActiveCertIndex((prev) => (prev === 0 ? certifications.length - 1 : prev - 1));
+  };
 
-  const filteredCerts =
-    activeCategory === 'All'
-      ? certifications
-      : certifications.filter((c) => c.category === activeCategory);
+  const nextCert = () => {
+    setActiveCertIndex((prev) => (prev === certifications.length - 1 ? 0 : prev + 1));
+  };
 
   return (
     <section id="certificates-resume" className="relative py-28 z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono uppercase tracking-wider mb-3">
-            <span>05 // Verified Credentials</span>
+        {/* ============================================================ */}
+        {/* STORYBOARD SLIDE 9: CERTIFICATES CAROUSEL */}
+        {/* ============================================================ */}
+        <div className="mb-24">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono uppercase tracking-wider mb-2">
+                <span>05 // Accreditations</span>
+              </div>
+              <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+                Certificates
+              </h2>
+              <p className="text-slate-400 text-xs sm:text-sm mt-1 font-mono">
+                Verified skills. Real achievements.
+              </p>
+            </div>
+
+            {/* Carousel Navigation Arrows matching Storyboard */}
+            <div className="flex items-center gap-3">
+              <button
+                onClick={prevCert}
+                className="p-3 rounded-full bg-slate-900 border border-slate-700 hover:border-cyan-400 text-slate-300 hover:text-cyan-300 transition-all shadow-[0_0_15px_rgba(0,0,0,0.5)]"
+                aria-label="Previous certificate"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <span className="text-xs font-mono text-slate-400">
+                {activeCertIndex + 1} / {certifications.length}
+              </span>
+              <button
+                onClick={nextCert}
+                className="p-3 rounded-full bg-slate-900 border border-slate-700 hover:border-cyan-400 text-slate-300 hover:text-cyan-300 transition-all shadow-[0_0_15px_rgba(0,0,0,0.5)]"
+                aria-label="Next certificate"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-            CERTIFICATES & RESUME
-          </h2>
-          <p className="text-slate-400 text-sm sm:text-base mt-3">
-            Industry accreditations and official curriculum vitae
-          </p>
+
+          {/* Realistic Holographic Certificate Cards Standing on Reflective Floor */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+            {certifications
+              .slice(activeCertIndex, activeCertIndex + 3)
+              .concat(
+                activeCertIndex + 3 > certifications.length
+                  ? certifications.slice(0, (activeCertIndex + 3) % certifications.length)
+                  : []
+              )
+              .slice(0, 3)
+              .map((cert) => (
+                <div
+                  key={cert.id}
+                  className="relative rounded-3xl p-6 sm:p-7 bg-gradient-to-b from-[#ffffff]/95 to-[#e2e8f0]/95 text-slate-900 border border-cyan-300/40 shadow-[0_15px_50px_rgba(0,240,255,0.2)] flex flex-col justify-between group hover:scale-[1.03] transition-all duration-300"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-4 border-b border-slate-200 pb-3">
+                      <span className="text-xs font-mono font-bold tracking-wider text-purple-700 uppercase">
+                        {cert.category}
+                      </span>
+                      <ShieldCheck className="w-5 h-5 text-emerald-600" />
+                    </div>
+
+                    <div className="mb-4">
+                      <span className="text-[11px] font-mono text-slate-500 uppercase tracking-wider block">
+                        Certificate of Achievement
+                      </span>
+                      <h4 className="text-lg font-black text-slate-900 leading-tight mt-1">
+                        {cert.title}
+                      </h4>
+                      <p className="text-xs font-semibold text-purple-800 mt-1 font-mono">
+                        {cert.issuer}
+                      </p>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-slate-100 border border-slate-200 text-xs text-slate-700 mb-6">
+                      <span className="font-bold text-slate-900">Verified Competencies: </span>
+                      {cert.skills}
+                    </div>
+                  </div>
+
+                  <div className="pt-3 border-t border-slate-200 flex items-center justify-between">
+                    <button
+                      onClick={() => setActiveCertModal(cert)}
+                      className="px-4 py-2 rounded-xl text-xs font-bold bg-[#070b19] text-cyan-300 hover:bg-slate-800 hover:text-white transition-all shadow-md flex items-center gap-1.5"
+                    >
+                      <span>View Certificate</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </button>
+
+                    <a
+                      href={cert.file}
+                      download
+                      className="p-2 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-700 transition-all"
+                      title="Download PDF"
+                    >
+                      <Download className="w-4 h-4" />
+                    </a>
+                  </div>
+                </div>
+              ))}
+          </div>
         </div>
 
         {/* ============================================================ */}
-        {/* PART A: HOLOGRAPHIC RESUME CARD */}
+        {/* STORYBOARD SLIDE 10: 3D FLOATING RESUME PEDESTAL */}
         {/* ============================================================ */}
-        <div className="mb-20">
-          <div className="glass-card-purple rounded-3xl p-8 sm:p-10 border border-purple-500/30 relative overflow-hidden shadow-[0_0_50px_rgba(168,85,247,0.15)]">
-            <div className="absolute -right-16 -top-16 w-72 h-72 bg-purple-500/15 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -left-16 -bottom-16 w-72 h-72 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="mt-20">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Resume
+            </h3>
+            <p className="text-slate-400 text-xs sm:text-sm mt-1 font-mono">
+              Download my resume or view it online.
+            </p>
+          </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-8 space-y-4">
-                <div className="flex items-center gap-2">
-                  <span className="px-3 py-1 rounded-full text-xs font-mono bg-purple-500/20 border border-purple-400/40 text-purple-300">
-                    Official Resume
-                  </span>
-                  <span className="text-xs text-slate-400 font-mono">
-                    Updated September 2026
-                  </span>
+          <div className="relative max-w-4xl mx-auto p-8 sm:p-12 rounded-3xl bg-[#070b1e]/90 backdrop-blur-2xl border border-purple-500/40 shadow-[0_0_60px_rgba(168,85,247,0.25)] flex flex-col lg:flex-row items-center justify-between gap-10 overflow-hidden">
+            {/* Ambient Light Beam */}
+            <div className="absolute top-0 left-1/4 w-40 h-full bg-gradient-to-b from-cyan-400/20 via-purple-500/10 to-transparent blur-3xl pointer-events-none transform -skew-x-12" />
+
+            {/* 3D Tilted Floating Resume Document Preview */}
+            <div className="relative flex flex-col items-center">
+              <div
+                className="w-56 sm:w-64 aspect-[1/1.4] rounded-2xl bg-gradient-to-br from-white via-slate-100 to-slate-200 text-slate-900 p-5 shadow-[0_20px_50px_rgba(0,240,255,0.35)] border border-cyan-300 transform -rotate-3 hover:rotate-0 hover:scale-105 transition-all duration-500 flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center gap-2 mb-3 border-b border-slate-300 pb-2">
+                    <div className="w-7 h-7 rounded-full bg-cyan-600 text-white flex items-center justify-center font-bold text-xs">
+                      MS
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold leading-tight">Mohana Srija Puram</p>
+                      <p className="text-[9px] text-slate-500">CS Engineer • 8.15 CGPA</p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 text-[9px] text-slate-700">
+                    <div className="h-1.5 bg-slate-300 rounded w-full" />
+                    <div className="h-1.5 bg-slate-200 rounded w-5/6" />
+                    <div className="h-1.5 bg-slate-300 rounded w-4/6" />
+                    <div className="pt-2">
+                      <p className="font-bold text-[9px] text-purple-900">EXPERIENCE & INTERNSHIPS</p>
+                      <div className="h-1 bg-slate-200 rounded w-full mt-1" />
+                      <div className="h-1 bg-slate-200 rounded w-4/5 mt-0.5" />
+                    </div>
+                  </div>
                 </div>
 
-                <h3 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-                  Mohana Srija Puram — Full CV
-                </h3>
-
-                <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl">
-                  Comprehensive documentation of academic metrics (CGPA 8.15 / 10), technical specializations in full-stack MERN & AI workflows, 3 industry internships, and 11+ professional certifications.
-                </p>
-
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
-                  <div className="p-3 rounded-xl bg-[#070b19]/80 border border-slate-800">
-                    <p className="text-[11px] text-slate-400 font-mono">Education</p>
-                    <p className="text-xs font-bold text-white">B.Tech CSE (8.15 CGPA)</p>
-                  </div>
-                  <div className="p-3 rounded-xl bg-[#070b19]/80 border border-slate-800">
-                    <p className="text-[11px] text-slate-400 font-mono">Focus</p>
-                    <p className="text-xs font-bold text-cyan-300">MERN, AI & DSA</p>
-                  </div>
-                  <div className="p-3 rounded-xl bg-[#070b19]/80 border border-slate-800 col-span-2 sm:col-span-1">
-                    <p className="text-[11px] text-slate-400 font-mono">Credentials</p>
-                    <p className="text-xs font-bold text-purple-300">11+ Verified Certs</p>
-                  </div>
+                <div className="pt-2 border-t border-slate-300 flex justify-between items-center text-[9px] text-slate-500 font-mono">
+                  <span>Official Document</span>
+                  <span className="text-cyan-700 font-bold">PDF</span>
                 </div>
               </div>
 
-              <div className="lg:col-span-4 flex flex-col gap-3 justify-center">
+              {/* Glowing circular pedestal underneath */}
+              <div className="w-52 h-6 rounded-[100%] bg-gradient-to-r from-cyan-400 via-purple-500 to-cyan-400 blur-sm shadow-[0_0_30px_#00f0ff] mt-4 opacity-80" />
+            </div>
+
+            {/* Action Buttons & Summary matching Storyboard Slide 10 */}
+            <div className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-4 max-w-md">
+              <h4 className="text-xl sm:text-2xl font-bold text-white">
+                Comprehensive Curriculum Vitae
+              </h4>
+              <p className="text-sm text-slate-300 leading-relaxed">
+                Detailed profile covering B.Tech CSE coursework (Vignan University), MERN & AI project architectures, 3 industry internships, and 11+ professional credentials.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-3 w-full pt-4">
                 <a
                   href={personal.resumePath}
                   download="Mohana-Srija-Puram-Resume.pdf"
-                  className="w-full py-4 rounded-2xl text-sm font-bold bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white shadow-[0_0_25px_rgba(0,240,255,0.4)] flex items-center justify-center gap-2 transition-all transform hover:-translate-y-0.5"
+                  className="flex-1 py-3.5 px-6 rounded-full text-xs sm:text-sm font-bold bg-gradient-to-r from-purple-600 via-purple-500 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-[0_0_25px_rgba(168,85,247,0.5)] flex items-center justify-center gap-2 transition-all transform hover:-translate-y-0.5"
                 >
                   <Download className="w-4 h-4" />
-                  <span>Download Resume (PDF)</span>
+                  <span>Download PDF</span>
                 </a>
 
                 <a
                   href={personal.resumePath}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-3.5 rounded-2xl text-sm font-semibold bg-slate-900/90 hover:bg-slate-800 border border-purple-500/40 hover:border-purple-400 text-purple-300 hover:text-white flex items-center justify-center gap-2 transition-all"
+                  className="flex-1 py-3.5 px-6 rounded-full text-xs sm:text-sm font-semibold bg-slate-900/90 hover:bg-slate-800 border border-purple-400/40 text-purple-300 hover:text-white flex items-center justify-center gap-2 transition-all"
                 >
                   <ExternalLink className="w-4 h-4" />
-                  <span>View Resume Online</span>
+                  <span>View Online</span>
                 </a>
               </div>
             </div>
           </div>
         </div>
-
-        {/* ============================================================ */}
-        {/* PART B: CERTIFICATIONS GRID */}
-        {/* ============================================================ */}
-        <div>
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-            <div className="flex items-center gap-3">
-              <div className="w-2.5 h-8 bg-gradient-to-b from-cyan-400 to-purple-500 rounded-full" />
-              <h3 className="text-2xl font-bold text-white">
-                Verified Certifications ({certifications.length})
-              </h3>
-            </div>
-
-            {/* Category Tabs */}
-            <div className="flex flex-wrap gap-1.5">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition-all ${
-                    activeCategory === cat
-                      ? 'bg-cyan-500 text-slate-950 font-bold shadow-[0_0_12px_#00f0ff]'
-                      : 'bg-slate-900/80 border border-slate-800 text-slate-400 hover:text-white'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredCerts.map((cert) => (
-              <div
-                key={cert.id}
-                className="glass-card rounded-2xl p-6 flex flex-col justify-between group hover:border-cyan-400/50 transition-all"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-cyan-500/15 border border-cyan-400/30 text-cyan-300">
-                      {cert.category}
-                    </span>
-                    <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                  </div>
-
-                  <h4 className="text-lg font-bold text-white mb-1 group-hover:text-cyan-300 transition-colors">
-                    {cert.title}
-                  </h4>
-
-                  <p className="text-xs font-semibold text-purple-300 mb-3 font-mono">
-                    {cert.issuer}
-                  </p>
-
-                  <p className="text-xs text-slate-300 leading-relaxed mb-6">
-                    <span className="text-slate-400 font-mono">Competencies:</span> {cert.skills}
-                  </p>
-                </div>
-
-                <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
-                  <button
-                    onClick={() => setActiveCert(cert)}
-                    className="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-400/40 text-cyan-300 hover:text-white transition-all flex items-center gap-1.5 shadow-[0_0_8px_rgba(0,240,255,0.2)]"
-                  >
-                    <span>View Certificate</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </button>
-
-                  <a
-                    href={cert.file}
-                    download
-                    className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-cyan-300 hover:border-cyan-400 transition-all"
-                    title="Download certificate PDF"
-                  >
-                    <Download className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
 
-      {/* Interactive Certificate PDF Modal */}
-      {activeCert && (
+      {activeCertModal && (
         <CertificateModal
-          certificate={activeCert}
-          onClose={() => setActiveCert(null)}
+          certificate={activeCertModal}
+          onClose={() => setActiveCertModal(null)}
         />
       )}
     </section>
