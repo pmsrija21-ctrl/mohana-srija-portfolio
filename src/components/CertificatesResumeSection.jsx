@@ -39,15 +39,15 @@ export default function CertificatesResumeSection() {
         >
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono uppercase tracking-wider mb-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/30 text-pink-300 text-xs font-mono uppercase tracking-wider mb-2">
                 <span>05 // Accreditations</span>
               </div>
               <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
                 Certificates
               </h2>
-              <p className="text-slate-400 text-xs sm:text-sm mt-1 font-mono flex items-center gap-2">
+              <p className="text-pink-200/70 text-xs sm:text-sm mt-1 font-mono flex items-center gap-2">
                 <span>Verified skills. Real achievements.</span>
-                <span className="text-cyan-400 text-[11px] hidden sm:inline-flex items-center gap-1">
+                <span className="text-pink-400 text-[11px] hidden sm:inline-flex items-center gap-1">
                   <RotateCw className="w-3 h-3 animate-spin" style={{ animationDuration: '10s' }} />
                   <span>Auto-cycling</span>
                 </span>
@@ -58,17 +58,17 @@ export default function CertificatesResumeSection() {
             <div className="flex items-center gap-3">
               <button
                 onClick={prevCert}
-                className="p-3 rounded-full bg-slate-900 border border-slate-700 hover:border-cyan-400 text-slate-300 hover:text-cyan-300 transition-all shadow-[0_0_15px_rgba(0,0,0,0.5)]"
+                className="p-3 rounded-full bg-purple-950 border border-purple-800 hover:border-pink-400 text-purple-200 hover:text-pink-300 transition-all shadow-[0_0_15px_rgba(0,0,0,0.5)]"
                 aria-label="Previous certificate"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
-              <span className="text-xs font-mono text-slate-400">
+              <span className="text-xs font-mono text-pink-200/70">
                 {activeCertIndex + 1} / {certifications.length}
               </span>
               <button
                 onClick={nextCert}
-                className="p-3 rounded-full bg-slate-900 border border-slate-700 hover:border-cyan-400 text-slate-300 hover:text-cyan-300 transition-all shadow-[0_0_15px_rgba(0,0,0,0.5)]"
+                className="p-3 rounded-full bg-purple-950 border border-purple-800 hover:border-pink-400 text-purple-200 hover:text-pink-300 transition-all shadow-[0_0_15px_rgba(0,0,0,0.5)]"
                 aria-label="Next certificate"
               >
                 <ChevronRight className="w-5 h-5" />
@@ -89,11 +89,11 @@ export default function CertificatesResumeSection() {
               .map((cert) => (
                 <div
                   key={cert.id}
-                  className="relative rounded-3xl p-6 sm:p-7 bg-gradient-to-b from-[#ffffff]/95 to-[#e2e8f0]/95 text-slate-900 border border-cyan-300/40 shadow-[0_15px_50px_rgba(0,240,255,0.2)] flex flex-col justify-between group hover:scale-[1.03] transition-all duration-300"
+                  className="relative rounded-3xl p-6 sm:p-7 bg-gradient-to-b from-[#ffffff]/95 to-[#fce7f3]/95 text-slate-900 border border-pink-300/50 shadow-[0_15px_50px_rgba(236,72,153,0.2)] flex flex-col justify-between group hover:scale-[1.03] transition-all duration-300"
                 >
                   <div>
-                    <div className="flex items-center justify-between mb-4 border-b border-slate-200 pb-3">
-                      <span className="text-xs font-mono font-bold tracking-wider text-purple-700 uppercase">
+                    <div className="flex items-center justify-between mb-4 border-b border-pink-100 pb-3">
+                      <span className="text-xs font-mono font-bold tracking-wider text-purple-800 uppercase">
                         {cert.category}
                       </span>
                       <ShieldCheck className="w-5 h-5 text-emerald-600" />
@@ -106,32 +106,32 @@ export default function CertificatesResumeSection() {
                       <h4 className="text-lg font-black text-slate-900 leading-tight mt-1">
                         {cert.title}
                       </h4>
-                      <p className="text-xs font-semibold text-purple-800 mt-1 font-mono">
+                      <p className="text-xs font-semibold text-purple-900 mt-1 font-mono">
                         {cert.issuer}
                       </p>
                     </div>
 
-                    <div className="p-3 rounded-xl bg-slate-100 border border-slate-200 text-xs text-slate-700 mb-6">
+                    <div className="p-3 rounded-xl bg-pink-50/70 border border-pink-100 text-xs text-slate-800 mb-6">
                       <span className="font-bold text-slate-900">Verified Competencies: </span>
                       {cert.skills}
                     </div>
                   </div>
 
-                  <div className="pt-4 border-t border-slate-200 flex items-center justify-between">
+                  <div className="pt-4 border-t border-pink-100 flex items-center justify-between">
                     <span className="text-xs font-mono text-slate-500">
                       {cert.date}
                     </span>
                     <button
                       onClick={() => setActiveCertModal(cert)}
-                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 hover:bg-slate-800 text-white shadow-md transition-all group-hover:bg-purple-700"
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-purple-950 hover:bg-pink-600 text-white shadow-md transition-all"
                     >
                       <span>View Certificate</span>
-                      <ExternalLink className="w-3.5 h-3.5 text-cyan-400" />
+                      <ExternalLink className="w-3.5 h-3.5 text-pink-400 group-hover:text-white" />
                     </button>
                   </div>
 
                   {/* Reflective Ground Shadow */}
-                  <div className="absolute -bottom-6 left-4 right-4 h-4 bg-gradient-to-b from-cyan-400/20 to-transparent blur-md rounded-full pointer-events-none" />
+                  <div className="absolute -bottom-6 left-4 right-4 h-4 bg-gradient-to-b from-pink-400/25 to-transparent blur-md rounded-full pointer-events-none" />
                 </div>
               ))}
           </div>
@@ -145,23 +145,23 @@ export default function CertificatesResumeSection() {
             <h3 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
               Resume
             </h3>
-            <p className="text-slate-400 text-xs sm:text-sm mt-1 font-mono">
+            <p className="text-pink-200/70 text-xs sm:text-sm mt-1 font-mono">
               Download my resume or view it online.
             </p>
           </div>
 
-          <div className="relative max-w-4xl mx-auto p-8 sm:p-12 rounded-3xl bg-[#070b1e]/90 backdrop-blur-2xl border border-purple-500/40 shadow-[0_0_60px_rgba(168,85,247,0.25)] flex flex-col lg:flex-row items-center justify-between gap-10 overflow-hidden">
+          <div className="relative max-w-4xl mx-auto p-8 sm:p-12 rounded-3xl bg-[#110526]/90 backdrop-blur-2xl border border-pink-500/40 shadow-[0_0_60px_rgba(236,72,153,0.25)] flex flex-col lg:flex-row items-center justify-between gap-10 overflow-hidden">
             {/* Ambient Light Beam */}
-            <div className="absolute top-0 left-1/4 w-40 h-full bg-gradient-to-b from-cyan-400/20 via-purple-500/10 to-transparent blur-3xl pointer-events-none transform -skew-x-12" />
+            <div className="absolute top-0 left-1/4 w-40 h-full bg-gradient-to-b from-pink-400/20 via-purple-500/10 to-transparent blur-3xl pointer-events-none transform -skew-x-12" />
 
-            {/* 3D Tilted Floating Resume Document Preview with subtle animated float & tilt */}
+            {/* 3D Tilted Floating Resume Document Preview */}
             <div className="relative flex flex-col items-center">
               <div
-                className="w-56 sm:w-64 aspect-[1/1.4] rounded-2xl bg-gradient-to-br from-white via-slate-100 to-slate-200 text-slate-900 p-5 shadow-[0_20px_50px_rgba(0,240,255,0.35)] border border-cyan-300 transform -rotate-3 hover:rotate-0 hover:scale-105 transition-all duration-500 flex flex-col justify-between"
+                className="w-56 sm:w-64 aspect-[1/1.4] rounded-2xl bg-gradient-to-br from-white via-pink-50/50 to-slate-100 text-slate-900 p-5 shadow-[0_20px_50px_rgba(236,72,153,0.35)] border border-pink-300 transform -rotate-3 hover:rotate-0 hover:scale-105 transition-all duration-500 flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center gap-2 mb-3 border-b border-slate-300 pb-2">
-                    <div className="w-7 h-7 rounded-full bg-cyan-600 text-white flex items-center justify-center font-bold text-xs">
+                  <div className="flex items-center gap-2 mb-3 border-b border-pink-200 pb-2">
+                    <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-pink-600 to-purple-600 text-white flex items-center justify-center font-bold text-xs">
                       MS
                     </div>
                     <div>
@@ -184,12 +184,12 @@ export default function CertificatesResumeSection() {
 
                 <div className="pt-2 border-t border-slate-300 flex justify-between items-center text-[9px] text-slate-500 font-mono">
                   <span>Official Document</span>
-                  <span className="text-cyan-700 font-bold">PDF</span>
+                  <span className="text-pink-600 font-bold">PDF</span>
                 </div>
               </div>
 
               {/* Glowing circular pedestal underneath */}
-              <div className="w-52 h-6 rounded-[100%] bg-gradient-to-r from-cyan-400 via-purple-500 to-cyan-400 blur-sm shadow-[0_0_30px_#00f0ff] mt-4 opacity-80" />
+              <div className="w-52 h-6 rounded-[100%] bg-gradient-to-r from-pink-400 via-purple-500 to-rose-400 blur-sm shadow-[0_0_30px_#ec4899] mt-4 opacity-80" />
             </div>
 
             {/* Action Buttons & Summary matching Storyboard Slide 10 */}
@@ -197,7 +197,7 @@ export default function CertificatesResumeSection() {
               <h4 className="text-xl sm:text-2xl font-bold text-white">
                 Comprehensive Curriculum Vitae
               </h4>
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <p className="text-sm text-pink-100/90 leading-relaxed">
                 Detailed profile covering B.Tech CSE coursework (Vignan University), MERN & AI project architectures, 3 industry internships, and 11+ professional credentials.
               </p>
 
@@ -205,7 +205,7 @@ export default function CertificatesResumeSection() {
                 <a
                   href={personal.resumePath}
                   download="Mohana-Srija-Puram-Resume.pdf"
-                  className="flex-1 py-3.5 px-6 rounded-full text-xs sm:text-sm font-bold bg-gradient-to-r from-purple-600 via-purple-500 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-[0_0_25px_rgba(168,85,247,0.5)] flex items-center justify-center gap-2 transition-all transform hover:-translate-y-0.5"
+                  className="flex-1 py-3.5 px-6 rounded-full text-xs sm:text-sm font-bold bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white shadow-[0_0_25px_rgba(236,72,153,0.5)] flex items-center justify-center gap-2 transition-all transform hover:-translate-y-0.5"
                 >
                   <Download className="w-4 h-4" />
                   <span>Download PDF</span>
@@ -215,7 +215,7 @@ export default function CertificatesResumeSection() {
                   href={personal.resumePath}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 py-3.5 px-6 rounded-full text-xs sm:text-sm font-semibold bg-slate-900/90 hover:bg-slate-800 border border-purple-400/40 text-purple-300 hover:text-white flex items-center justify-center gap-2 transition-all"
+                  className="flex-1 py-3.5 px-6 rounded-full text-xs sm:text-sm font-semibold bg-[#1a0730]/90 hover:bg-[#250a44] border border-pink-400/50 text-pink-300 hover:text-white flex items-center justify-center gap-2 transition-all"
                 >
                   <ExternalLink className="w-4 h-4" />
                   <span>View Online</span>

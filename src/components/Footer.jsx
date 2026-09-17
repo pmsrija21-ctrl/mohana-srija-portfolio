@@ -1,81 +1,50 @@
 import React from 'react';
-import { ArrowUp, Mail, Heart } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from './SocialIcons';
 import { portfolioData } from '../data/portfolioData';
+import { GithubIcon, LinkedinIcon } from './SocialIcons';
+import { Heart } from 'lucide-react';
 
 export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const { personal } = portfolioData;
 
   return (
-    <footer className="relative z-10 border-t border-cyan-500/20 bg-[#02050f]/90 backdrop-blur-xl py-12 text-slate-400">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-slate-800/80">
-          {/* Monogram and Title */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-purple-600 p-[1px]">
-              <div className="w-full h-full bg-[#070b19] rounded-[11px] flex items-center justify-center">
-                <span className="font-extrabold text-sm text-cyan-300">MSP</span>
-              </div>
-            </div>
-            <div>
-              <p className="text-white font-bold text-base tracking-wide">
-                Mohana Srija Puram
-              </p>
-              <p className="text-xs text-cyan-400/80 font-mono">
-                Computer Science Engineering • Vignan University
-              </p>
+    <footer className="relative z-10 border-t border-purple-900/60 bg-[#06020e] py-12 text-pink-200/70 text-xs font-mono">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="flex items-center gap-3">
+          <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-pink-600 to-purple-600 p-[1px]">
+            <div className="w-full h-full bg-[#0c041c] rounded-[7px] flex items-center justify-center text-pink-300 font-bold text-xs">
+              MS
             </div>
           </div>
-
-          {/* Social Links */}
-          <div className="flex items-center gap-4">
-            <a
-              href={portfolioData.personal.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2.5 rounded-full bg-slate-900/80 border border-cyan-500/20 text-slate-300 hover:text-cyan-300 hover:border-cyan-400/50 hover:shadow-[0_0_15px_rgba(0,240,255,0.3)] transition-all"
-              aria-label="GitHub Profile"
-            >
-              <GithubIcon className="w-4 h-4" />
-            </a>
-            <a
-              href={portfolioData.personal.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2.5 rounded-full bg-slate-900/80 border border-purple-500/20 text-slate-300 hover:text-purple-300 hover:border-purple-400/50 hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] transition-all"
-              aria-label="LinkedIn Profile"
-            >
-              <LinkedinIcon className="w-4 h-4" />
-            </a>
-            <a
-              href={`mailto:${portfolioData.personal.email}`}
-              className="p-2.5 rounded-full bg-slate-900/80 border border-cyan-500/20 text-slate-300 hover:text-cyan-300 hover:border-cyan-400/50 hover:shadow-[0_0_15px_rgba(0,240,255,0.3)] transition-all"
-              aria-label="Email Contact"
-            >
-              <Mail className="w-4 h-4" />
-            </a>
-          </div>
-
-          {/* Back to top button */}
-          <button
-            onClick={scrollToTop}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-xs font-mono transition-all hover:shadow-[0_0_15px_rgba(0,240,255,0.3)]"
-          >
-            <span>Back to top</span>
-            <ArrowUp className="w-3.5 h-3.5" />
-          </button>
+          <span>© 2026 Mohana Srija Puram. All rights reserved.</span>
         </div>
 
-        {/* Bottom Tagline & Copyright */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <p>
-            © {new Date().getFullYear()} Mohana Srija Puram. Built with React, Tailwind CSS & Cosmic WebGL.
-          </p>
-          <p className="font-mono text-cyan-400/60">
-            Dream. Build. Grow.
-          </p>
+        <div className="flex items-center gap-6">
+          <a href="#home" className="hover:text-pink-300 transition-colors">Home</a>
+          <a href="#projects" className="hover:text-pink-300 transition-colors">Projects</a>
+          <a href="#skills-experience" className="hover:text-pink-300 transition-colors">Skills</a>
+          <a href="#certificates-resume" className="hover:text-pink-300 transition-colors">Certificates</a>
+          <a href="#contact" className="hover:text-pink-300 transition-colors">Contact</a>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <a
+            href={personal.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 rounded-full bg-purple-950/80 border border-purple-800 hover:border-pink-400 text-purple-200 hover:text-pink-300 transition-all"
+            aria-label="GitHub Profile"
+          >
+            <GithubIcon className="w-3.5 h-3.5" />
+          </a>
+          <a
+            href={personal.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 rounded-full bg-purple-950/80 border border-purple-800 hover:border-purple-400 text-purple-200 hover:text-purple-300 transition-all"
+            aria-label="LinkedIn Profile"
+          >
+            <LinkedinIcon className="w-3.5 h-3.5" />
+          </a>
         </div>
       </div>
     </footer>

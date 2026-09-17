@@ -1,168 +1,152 @@
 import React, { useState } from 'react';
-import { Mail, MapPin, Send, CheckCircle2, AlertCircle, Terminal, UserCheck, Download, Sparkles } from 'lucide-react';
+import { Mail, MapPin, Send, CheckCircle2, Terminal as TerminalIcon, Sparkles } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './SocialIcons';
-import confetti from 'canvas-confetti';
 import { portfolioData } from '../data/portfolioData';
 
 export default function ContactSection() {
   const { personal } = portfolioData;
 
-  // Contact Form State
-  const [formState, setFormState] = useState({ name: '', email: '', message: '' });
-  const [status, setStatus] = useState({ type: '', message: '' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  // Form State
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
+  const [submitted, setSubmitted] = useState(false);
 
-  // Terminal State (Storyboard Slide 15)
-  const [terminalInput, setTerminalInput] = useState('');
-  const [terminalOutput, setTerminalOutput] = useState([
-    'Welcome to MSP Interactive Terminal v1.0',
-    'Type "help" to view available commands: about, projects, skills, experience, certificates, resume, contact',
+  // Terminal CLI State
+  const [terminalHistory, setTerminalHistory] = useState([
+    { text: 'Portfolio Interactive CLI initialized. Type "help" for commands.', type: 'sys' }
   ]);
+  const [terminalInput, setTerminalInput] = useState('');
 
-  const handleCommand = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const cmd = terminalInput.trim().toLowerCase();
-    let reply = '';
-
-    if (cmd === 'help') {
-      reply = 'Available commands: about, projects, skills, experience, certificates, resume, contact, clear';
-    } else if (cmd === 'about') {
-      reply = `Mohana Srija Puram | B.Tech CSE (2024-2028), Vignan's University | CGPA: 8.15 / 10`;
-    } else if (cmd === 'projects') {
-      reply = 'Projects: 1. Autonomous Disaster Response AI, 2. Weather Travel Planner (MERN), 3. Hamiltonian Cycle Visualizer, 4. Bridge Crossing Visualizer';
-    } else if (cmd === 'skills') {
-      reply = 'Skills: C, Python, Java, DSA, OS, MERN Stack (React, Node, Express, MongoDB), Groq Llama 3, OpenAI API, Figma';
-    } else if (cmd === 'experience') {
-      reply = 'Experience: CodeAlpha Intern, Prodigy InfoTech Intern, Upcoming Unified Mentor (2026), Chess Championship Coordinator';
-    } else if (cmd === 'certificates') {
-      reply = '11+ verified certifications: Cisco (OS, Python, JS), NPTEL, Unstop (MongoDB, jQuery), Tata Soft Skills';
-    } else if (cmd === 'resume') {
-      reply = `Downloading resume... Path: ${personal.resumePath}`;
-      window.open(personal.resumePath, '_blank');
-    } else if (cmd === 'contact') {
-      reply = `Email: ${personal.email} | GitHub: ${personal.github}`;
-    } else if (cmd === 'clear') {
-      setTerminalOutput(['Terminal reset. Type "help" for commands.']);
-      setTerminalInput('');
-      return;
-    } else {
-      reply = `Command not recognized: "${cmd}". Type "help" for valid commands.`;
-    }
-
-    setTerminalOutput((prev) => [...prev, `mohana@portfolio:~$ ${cmd}`, reply]);
-    setTerminalInput('');
+    if (!formData.name || !formData.email || !formData.message) return;
+    setSubmitted(true);
+    setTimeout(() => {
+      setSubmitted(false);
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    }, 6000);
   };
 
-  const handleFormSubmit = (e) => {
+  const handleTerminalSubmit = (e) => {
     e.preventDefault();
-    if (!formState.name.trim() || !formState.email.trim() || !formState.message.trim()) {
-      setStatus({ type: 'error', message: 'Please fill in all required fields.' });
-      return;
+    const cmd = terminalInput.trim().toLowerCase();
+    if (!cmd) return;
+
+    const newHistory = [...terminalHistory, { text: `mohana@portfolio:~$ ${terminalInput}`, type: 'user' }];
+
+    switch (cmd) {
+      case 'help':
+        newHistory.push({ text: 'Available commands: about, skills, projects, experience, certificates, resume, contact, clear', type: 'res' });
+        break;
+      case 'about':
+        newHistory.push({ text: `Mohana Srija Puram | B.Tech CSE (2024-2028) @ Vignan University | CGPA: 8.15`, type: 'res' });
+        break;
+      case 'skills':
+        newHistory.push({ text: 'Core Skills: Python, Java, React.js, Node.js, Express, MongoDB, MySQL, C++, Groq LLM', type: 'res' });
+        break;
+      case 'projects':
+        newHistory.push({ text: 'Projects: Autonomous Disaster Response, Weather Travel Planner, Hamiltonian Cycle, Bridge Crossing', type: 'res' });
+        break;
+      case 'experience':
+        newHistory.push({ text: 'Internships: CodeAlpha (Web Dev), Prodigy InfoTech (Web Dev), Unified Mentor (Upcoming 2026)', type: 'res' });
+        break;
+      case 'certificates':
+        newHistory.push({ text: 'Certificates: Cisco (Python, JS, OS), NPTEL (Management), Unstop (MongoDB, jQuery), Tata (Interview Skills)', type: 'res' });
+        break;
+      case 'resume':
+        newHistory.push({ text: `Resume downloadable at: ${personal.resumePath}`, type: 'res' });
+        break;
+      case 'contact':
+        newHistory.push({ text: `Email: ${personal.email} | Location: ${personal.location} | GitHub: ${personal.github}`, type: 'res' });
+        break;
+      case 'clear':
+        setTerminalHistory([]);
+        setTerminalInput('');
+        return;
+      default:
+        newHistory.push({ text: `Command not found: "${cmd}". Type "help" to inspect commands.`, type: 'err' });
     }
-    setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setStatus({
-        type: 'success',
-        message: `Thank you, ${formState.name.trim()}! Your message has been prepared. You can also email me directly at ${personal.email}.`,
-      });
-      try {
-        confetti({ particleCount: 80, spread: 75, origin: { y: 0.7 } });
-      } catch (err) {}
-      setFormState({ name: '', email: '', message: '' });
-    }, 500);
+
+    setTerminalHistory(newHistory);
+    setTerminalInput('');
   };
 
   return (
     <section id="contact" className="relative py-28 z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* ============================================================ */}
-        {/* STORYBOARD SLIDE 12: RECRUITER MODE (QUICK OVERVIEW) */}
-        {/* ============================================================ */}
-        <div className="mb-24 p-6 sm:p-8 rounded-3xl bg-[#060b1e]/90 backdrop-blur-2xl border border-cyan-400/40 shadow-[0_0_40px_rgba(0,240,255,0.2)]">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center text-cyan-300">
-                <UserCheck className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-xl font-extrabold text-white tracking-tight">
-                  Recruiter Mode
-                </h3>
-                <p className="text-xs font-mono text-cyan-400">
-                  Quick Overview — All in one place for hiring managers
-                </p>
-              </div>
-            </div>
-
-            <a
-              href={personal.resumePath}
-              download="Mohana-Srija-Puram-Resume.pdf"
-              className="px-5 py-2.5 rounded-full text-xs font-bold bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-[0_0_15px_#00f0ff] flex items-center gap-2 transition-all self-start sm:self-auto"
-            >
-              <Download className="w-4 h-4" />
-              <span>Download Resume</span>
-            </a>
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/30 text-pink-300 text-xs font-mono uppercase tracking-wider mb-3">
+            <span>06 // Communications</span>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-6 text-xs">
-            <div className="p-4 rounded-xl bg-[#040714] border border-slate-800">
-              <span className="text-slate-400 font-mono block mb-1">Candidate Profile</span>
-              <p className="font-bold text-white text-sm">Mohana Srija Puram</p>
-              <p className="text-cyan-300 font-mono text-[11px] mt-0.5">B.Tech CSE (8.15 CGPA)</p>
-            </div>
-
-            <div className="p-4 rounded-xl bg-[#040714] border border-slate-800">
-              <span className="text-slate-400 font-mono block mb-1">Core Tech Stack</span>
-              <p className="font-bold text-white text-sm">Python, Java, React, MERN</p>
-              <p className="text-purple-300 font-mono text-[11px] mt-0.5">DSA, OS, Groq Llama 3</p>
-            </div>
-
-            <div className="p-4 rounded-xl bg-[#040714] border border-slate-800">
-              <span className="text-slate-400 font-mono block mb-1">Top Projects</span>
-              <p className="font-bold text-white text-sm">Disaster AI & Travel MERN</p>
-              <p className="text-emerald-400 font-mono text-[11px] mt-0.5">Algorithm Visualizers</p>
-            </div>
-
-            <div className="p-4 rounded-xl bg-[#040714] border border-slate-800">
-              <span className="text-slate-400 font-mono block mb-1">Internships & Certs</span>
-              <p className="font-bold text-white text-sm">3 Industry Internships</p>
-              <p className="text-pink-300 font-mono text-[11px] mt-0.5">11+ Verified Certifications</p>
-            </div>
-          </div>
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+            Let's Connect
+          </h2>
+          <p className="text-pink-200/70 text-xs sm:text-sm mt-2 font-mono max-w-xl mx-auto">
+            Open to software engineering, AI/ML roles, and impactful collaborations.
+          </p>
         </div>
 
-        {/* ============================================================ */}
-        {/* STORYBOARD SLIDE 11: LET'S CONNECT & ORIGAMI AIRPLANE */}
-        {/* ============================================================ */}
-        <div className="mb-24">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono uppercase tracking-wider mb-3">
-              <span>06 // Communication</span>
+        {/* Storyboard Slide 12: Recruiter Mode Banner */}
+        <div className="max-w-5xl mx-auto mb-16 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#1b0634] via-[#120528] to-[#1b0634] border border-pink-400/40 shadow-[0_0_45px_rgba(236,72,153,0.2)] flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="text-left">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/20 text-pink-300 text-xs font-mono uppercase font-bold mb-2">
+              <Sparkles className="w-3.5 h-3.5 text-pink-400" />
+              <span>Recruiter Mode Active</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-              Let's Connect
-            </h2>
-            <p className="text-slate-400 text-sm sm:text-base mt-2">
-              Have a project in mind or just want to say hi? I'd love to hear from you!
+            <h3 className="text-xl sm:text-2xl font-bold text-white">
+              Hiring for 2026 / 2028 Tech Roles?
+            </h3>
+            <p className="text-xs sm:text-sm text-pink-100/80 mt-1 max-w-xl">
+              Quick access to verified credentials, 8.15 CGPA transcript, and engineering portfolios for your candidate pipeline.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-5xl mx-auto">
-            {/* Left Column: Direct Contact Info Cards */}
-            <div className="lg:col-span-5 space-y-4">
+          <a
+            href={personal.resumePath}
+            download="Mohana-Srija-Puram-Resume.pdf"
+            className="px-6 py-3 rounded-full text-xs sm:text-sm font-bold bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white shadow-[0_0_20px_rgba(236,72,153,0.5)] whitespace-nowrap transition-all"
+          >
+            Direct Resume Download
+          </a>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start max-w-5xl mx-auto">
+          {/* Left Column: Storyboard Slide 11 - Origami Airplane & Contact Channels */}
+          <div className="lg:col-span-5 flex flex-col gap-6">
+            {/* Origami Paper Airplane matching Slide 11 */}
+            <div className="p-8 rounded-3xl bg-[#13052a]/85 backdrop-blur-xl border border-purple-900/60 flex flex-col items-center justify-center text-center relative overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.5)]">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(236,72,153,0.15)_0%,transparent_70%)] pointer-events-none" />
+
+              {/* Glowing Origami Paper Airplane SVG */}
+              <svg viewBox="0 0 160 100" className="w-36 h-24 mb-4 drop-shadow-[0_0_20px_#ec4899]">
+                <polygon points="10,50 150,15 100,85" fill="none" stroke="#ec4899" strokeWidth="2.5" />
+                <polygon points="10,50 150,15 90,52" fill="none" stroke="#c084fc" strokeWidth="2" />
+                <polygon points="90,52 100,85 110,56" fill="none" stroke="#a855f7" strokeWidth="2" />
+                <line x1="10" y1="50" x2="90" y2="52" stroke="#f43f5e" strokeWidth="1.5" strokeDasharray="3 3" />
+              </svg>
+
+              <h4 className="text-xl font-bold font-serif italic text-pink-300 drop-shadow-[0_0_12px_rgba(236,72,153,0.8)] mb-2">
+                "Let's Build Together"
+              </h4>
+              <p className="text-xs text-pink-100/70 font-mono">
+                Turning ambitious ideas into scalable architectures.
+              </p>
+            </div>
+
+            {/* Direct Contact Cards */}
+            <div className="space-y-3">
               <a
                 href={`mailto:${personal.email}`}
-                className="glass-card rounded-2xl p-5 flex items-center gap-4 group hover:border-cyan-400 transition-all block"
+                className="p-4 rounded-2xl bg-[#120528]/80 border border-purple-900/60 hover:border-pink-400 text-pink-100 flex items-center gap-4 transition-all group"
               >
-                <div className="w-12 h-12 rounded-xl bg-cyan-500/15 border border-cyan-400/40 flex items-center justify-center text-cyan-300 group-hover:scale-110 transition-transform">
-                  <Mail className="w-5 h-5" />
+                <div className="p-3 rounded-xl bg-purple-950/80 border border-pink-500/30 text-pink-300 group-hover:shadow-[0_0_15px_rgba(236,72,153,0.4)]">
+                  <Mail className="w-4 h-4" />
                 </div>
                 <div>
-                  <p className="text-xs font-mono text-slate-400">Email</p>
-                  <p className="text-sm font-bold text-white group-hover:text-cyan-300 transition-colors break-all">
+                  <div className="text-[10px] font-mono uppercase text-pink-400">Email</div>
+                  <div className="text-xs sm:text-sm font-semibold text-white group-hover:text-pink-300 transition-colors">
                     {personal.email}
-                  </p>
+                  </div>
                 </div>
               </a>
 
@@ -170,16 +154,16 @@ export default function ContactSection() {
                 href={personal.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="glass-card rounded-2xl p-5 flex items-center gap-4 group hover:border-purple-400 transition-all block"
+                className="p-4 rounded-2xl bg-[#120528]/80 border border-purple-900/60 hover:border-purple-400 text-purple-100 flex items-center gap-4 transition-all group"
               >
-                <div className="w-12 h-12 rounded-xl bg-purple-500/15 border border-purple-400/40 flex items-center justify-center text-purple-300 group-hover:scale-110 transition-transform">
-                  <LinkedinIcon className="w-5 h-5" />
+                <div className="p-3 rounded-xl bg-purple-950/80 border border-purple-500/30 text-purple-300 group-hover:shadow-[0_0_15px_rgba(168,85,247,0.4)]">
+                  <LinkedinIcon className="w-4 h-4" />
                 </div>
                 <div>
-                  <p className="text-xs font-mono text-slate-400">LinkedIn</p>
-                  <p className="text-sm font-bold text-white group-hover:text-purple-300 transition-colors">
-                    {personal.linkedinHandle}
-                  </p>
+                  <div className="text-[10px] font-mono uppercase text-purple-400">LinkedIn</div>
+                  <div className="text-xs sm:text-sm font-semibold text-white group-hover:text-purple-300 transition-colors">
+                    Mohana Srija Puram
+                  </div>
                 </div>
               </a>
 
@@ -187,180 +171,171 @@ export default function ContactSection() {
                 href={personal.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="glass-card rounded-2xl p-5 flex items-center gap-4 group hover:border-cyan-400 transition-all block"
+                className="p-4 rounded-2xl bg-[#120528]/80 border border-purple-900/60 hover:border-pink-400 text-pink-100 flex items-center gap-4 transition-all group"
               >
-                <div className="w-12 h-12 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-slate-300 group-hover:scale-110 transition-transform">
+                <div className="p-3 rounded-xl bg-purple-950/80 border border-pink-500/30 text-pink-300 group-hover:shadow-[0_0_15px_rgba(236,72,153,0.4)]">
                   <GithubIcon className="w-4 h-4" />
                 </div>
                 <div>
-                  <p className="text-xs font-mono text-slate-400">GitHub</p>
-                  <p className="text-sm font-bold text-white group-hover:text-cyan-300 transition-colors">
-                    {personal.githubHandle}
-                  </p>
+                  <div className="text-[10px] font-mono uppercase text-pink-400">GitHub</div>
+                  <div className="text-xs sm:text-sm font-semibold text-white group-hover:text-pink-300 transition-colors">
+                    pmsrija21-ctrl
+                  </div>
                 </div>
               </a>
+            </div>
+          </div>
 
-              <div className="glass-card rounded-2xl p-5 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-400/40 flex items-center justify-center text-emerald-300">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-xs font-mono text-slate-400">Location</p>
-                  <p className="text-sm font-bold text-white">
-                    {personal.location}
+          {/* Right Column: Message Form & CLI Terminal */}
+          <div className="lg:col-span-7 flex flex-col gap-6">
+            {/* Interactive Message Form */}
+            <div className="p-6 sm:p-8 rounded-3xl bg-[#120528]/90 backdrop-blur-xl border border-purple-900/60 shadow-[0_10px_35px_rgba(0,0,0,0.5)] text-left">
+              <h4 className="text-lg font-bold text-white mb-4">
+                Send a Direct Message
+              </h4>
+
+              {submitted ? (
+                <div className="p-6 rounded-2xl bg-emerald-950/40 border border-emerald-400/50 text-emerald-300 text-center animate-fadeIn">
+                  <CheckCircle2 className="w-10 h-10 mx-auto mb-2 text-emerald-400" />
+                  <p className="font-bold">Thank You! Message Received.</p>
+                  <p className="text-xs text-emerald-200/80 mt-1">
+                    I will respond to your inquiry shortly.
                   </p>
                 </div>
-              </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[11px] font-mono text-pink-300 uppercase mb-1">
+                        Your Name
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder="Ada Lovelace"
+                        className="w-full px-4 py-2.5 rounded-xl bg-[#0a0316] border border-purple-900 text-white text-xs focus:outline-none focus:border-pink-400 font-mono"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-mono text-pink-300 uppercase mb-1">
+                        Your Email
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="recruiter@tech.com"
+                        className="w-full px-4 py-2.5 rounded-xl bg-[#0a0316] border border-purple-900 text-white text-xs focus:outline-none focus:border-pink-400 font-mono"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-mono text-pink-300 uppercase mb-1">
+                      Subject
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.subject}
+                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                      placeholder="Internship / Full-Time Engineering Opportunity"
+                      className="w-full px-4 py-2.5 rounded-xl bg-[#0a0316] border border-purple-900 text-white text-xs focus:outline-none focus:border-pink-400 font-mono"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-mono text-pink-300 uppercase mb-1">
+                      Message
+                    </label>
+                    <textarea
+                      rows={4}
+                      required
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      placeholder="Hi Mohana, we reviewed your portfolio and would like to discuss..."
+                      className="w-full px-4 py-2.5 rounded-xl bg-[#0a0316] border border-purple-900 text-white text-xs focus:outline-none focus:border-pink-400 font-mono resize-none"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full py-3 rounded-xl text-xs font-bold bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white shadow-[0_0_20px_rgba(236,72,153,0.4)] flex items-center justify-center gap-2 transition-all"
+                  >
+                    <Send className="w-3.5 h-3.5" />
+                    <span>Transmit Message</span>
+                  </button>
+                </form>
+              )}
             </div>
 
-            {/* Right Column: Neon Origami Paper Airplane + Message Form */}
-            <div className="lg:col-span-7 glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden">
-              {/* Origami Paper Airplane & Script Glow from Storyboard Slide 11 */}
-              <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
-                <div>
-                  <h3 className="text-xl font-bold text-white">
-                    Send Message
-                  </h3>
-                  <p className="font-serif italic text-cyan-300 text-sm mt-0.5">
-                    "Let's Build Together"
-                  </p>
+            {/* Storyboard Slide 15: Developer Terminal CLI */}
+            <div className="rounded-3xl bg-[#0a0316] border border-purple-900/80 overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.6)] text-left">
+              <div className="flex items-center justify-between px-4 py-2.5 bg-[#14062c] border-b border-purple-900/60 text-xs font-mono text-pink-300">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-rose-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-amber-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
+                  <span className="ml-2 text-[11px] text-pink-200/60">mohana@portfolio:~$</span>
                 </div>
-
-                {/* Glowing Neon Paper Airplane SVG */}
-                <div className="w-12 h-12 text-purple-400 drop-shadow-[0_0_12px_#a855f7] transform -rotate-12 animate-float">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                    <path d="M2 12l20-9-9 20-2-9-9-2z" />
-                  </svg>
-                </div>
+                <TerminalIcon className="w-3.5 h-3.5 text-pink-400" />
               </div>
 
-              {status.message && (
-                <div className="mb-4 p-3 rounded-xl bg-emerald-500/15 border border-emerald-400 text-emerald-300 text-xs">
-                  {status.message}
-                </div>
-              )}
+              <div className="p-4 font-mono text-xs max-h-48 overflow-y-auto space-y-1">
+                {terminalHistory.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className={`${
+                      item.type === 'user'
+                        ? 'text-pink-300'
+                        : item.type === 'err'
+                        ? 'text-rose-400'
+                        : item.type === 'sys'
+                        ? 'text-purple-400'
+                        : 'text-slate-300'
+                    }`}
+                  >
+                    {item.text}
+                  </div>
+                ))}
+              </div>
 
-              <form onSubmit={handleFormSubmit} className="space-y-4">
+              <form onSubmit={handleTerminalSubmit} className="flex border-t border-purple-900/60">
+                <span className="px-3 py-2 text-xs font-mono text-pink-400 bg-[#0c031c]">
+                  $
+                </span>
                 <input
                   type="text"
-                  placeholder="Your Name"
-                  value={formState.name}
-                  onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                  required
-                  className="w-full px-4 py-3 rounded-xl bg-[#040714] border border-slate-800 text-white placeholder-slate-500 text-xs focus:border-cyan-400 outline-none"
+                  value={terminalInput}
+                  onChange={(e) => setTerminalInput(e.target.value)}
+                  placeholder="type 'help' or 'about'..."
+                  className="flex-1 px-2 py-2 bg-[#0a0316] text-xs font-mono text-white focus:outline-none"
                 />
-                <input
-                  type="email"
-                  placeholder="Your Email Address"
-                  value={formState.email}
-                  onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                  required
-                  className="w-full px-4 py-3 rounded-xl bg-[#040714] border border-slate-800 text-white placeholder-slate-500 text-xs focus:border-cyan-400 outline-none"
-                />
-                <textarea
-                  rows={3}
-                  placeholder="Your Message..."
-                  value={formState.message}
-                  onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                  required
-                  className="w-full px-4 py-3 rounded-xl bg-[#040714] border border-slate-800 text-white placeholder-slate-500 text-xs focus:border-cyan-400 outline-none resize-none"
-                />
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full py-3 rounded-xl text-xs font-bold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-all flex items-center justify-center gap-2"
-                >
-                  <span>Send Message</span>
-                  <Send className="w-3.5 h-3.5" />
-                </button>
               </form>
             </div>
           </div>
         </div>
 
-        {/* ============================================================ */}
-        {/* STORYBOARD SLIDE 15: INTERACTIVE DEVELOPER TERMINAL */}
-        {/* ============================================================ */}
-        <div className="mb-24 max-w-4xl mx-auto rounded-3xl bg-[#050817] border border-cyan-500/30 p-5 sm:p-6 shadow-[0_0_40px_rgba(0,240,255,0.15)] font-mono text-xs">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-4 text-slate-400">
-            <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-red-500 inline-block" />
-              <span className="w-3 h-3 rounded-full bg-yellow-500 inline-block" />
-              <span className="w-3 h-3 rounded-full bg-green-500 inline-block" />
-              <span className="ml-2 text-cyan-300 text-[11px]">mohana@portfolio:~ (Interactive CLI)</span>
-            </div>
-            <span className="text-[10px] text-slate-500">bash 5.2</span>
-          </div>
+        {/* Storyboard Slide 13 & 14: Sunset Tribute Card */}
+        <div className="mt-20 max-w-4xl mx-auto rounded-3xl p-8 sm:p-12 bg-gradient-to-b from-[#24083c] via-[#140526] to-[#080212] border border-pink-500/40 text-center relative overflow-hidden shadow-[0_0_60px_rgba(236,72,153,0.25)]">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(236,72,153,0.3)_0%,transparent_70%)] pointer-events-none" />
 
-          <div className="space-y-1 text-slate-300 max-h-48 overflow-y-auto mb-4">
-            {terminalOutput.map((line, idx) => (
-              <div key={idx} className={line.startsWith('mohana@') ? 'text-cyan-300' : 'text-slate-300'}>
-                {line}
-              </div>
-            ))}
-          </div>
+          <h3 className="text-3xl sm:text-5xl font-black text-white tracking-tight mb-3">
+            Thank You!
+          </h3>
+          <p className="text-base sm:text-lg text-pink-300 font-mono mb-4">
+            For visiting my portfolio
+          </p>
 
-          <form onSubmit={handleCommand} className="flex items-center gap-2 pt-2 border-t border-slate-800">
-            <span className="text-emerald-400">mohana@portfolio:~$</span>
-            <input
-              type="text"
-              value={terminalInput}
-              onChange={(e) => setTerminalInput(e.target.value)}
-              placeholder="Try: help, about, projects, skills, resume..."
-              className="flex-1 bg-transparent text-white focus:outline-none placeholder-slate-600 text-xs"
-            />
-          </form>
-        </div>
-
-        {/* ============================================================ */}
-        {/* STORYBOARD SLIDE 13 & 14: SUNSET SILHOUETTE & CLOSING TRIBUTE */}
-        {/* ============================================================ */}
-        <div className="relative max-w-4xl mx-auto rounded-3xl p-8 sm:p-12 bg-gradient-to-r from-[#170a1a] via-[#090b20] to-[#04091a] border border-pink-500/30 shadow-[0_0_50px_rgba(236,72,153,0.15)] text-center overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(236,72,153,0.2)_0%,transparent_70%)] pointer-events-none" />
-
-          <p className="font-serif italic text-2xl sm:text-3xl text-pink-300 drop-shadow-[0_0_15px_rgba(236,72,153,0.6)] mb-2">
+          <p className="italic text-lg sm:text-xl font-serif text-pink-200/90 mb-6 drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">
             "Dream. Build. Grow."
           </p>
 
-          <div className="p-6 rounded-2xl bg-[#070b1e]/80 border border-slate-800 max-w-md mx-auto my-6">
-            <h4 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              Thank You!
-            </h4>
-            <p className="text-slate-400 text-xs sm:text-sm mt-1">
-              For visiting my portfolio
-            </p>
-
-            <div className="flex items-center justify-center gap-4 mt-4">
-              <a
-                href={personal.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full bg-slate-900 border border-slate-700 text-slate-300 hover:text-purple-300"
-              >
-                <LinkedinIcon className="w-4 h-4" />
-              </a>
-              <a
-                href={personal.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full bg-slate-900 border border-slate-700 text-slate-300 hover:text-cyan-300"
-              >
-                <GithubIcon className="w-4 h-4" />
-              </a>
-              <a
-                href={`mailto:${personal.email}`}
-                className="p-2 rounded-full bg-slate-900 border border-slate-700 text-slate-300 hover:text-white"
-              >
-                <Mail className="w-4 h-4" />
-              </a>
-            </div>
-          </div>
-
-          <div className="text-xs font-mono text-cyan-400/80 tracking-widest uppercase">
+          <div className="inline-block px-5 py-2 rounded-full bg-purple-950/80 border border-pink-400/50 text-pink-300 text-xs font-mono">
             Ideas + Code + Impact — That's Me.
-          </div>
-          <div className="text-sm font-bold text-white mt-1">
-            {personal.name}
           </div>
         </div>
       </div>

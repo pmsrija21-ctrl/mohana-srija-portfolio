@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Download, ExternalLink, Sparkles } from 'lucide-react';
+import { Menu, X, Download, ExternalLink, Sparkles, Palette } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 
 export default function Navbar() {
@@ -46,7 +46,7 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-[#030712]/85 backdrop-blur-xl border-b border-cyan-500/20 py-3 shadow-[0_4px_30px_rgba(0,0,0,0.8)]'
+          ? 'bg-[#06020e]/90 backdrop-blur-xl border-b border-pink-500/20 py-3 shadow-[0_4px_30px_rgba(0,0,0,0.8)]'
           : 'bg-transparent py-5'
       }`}
     >
@@ -54,27 +54,27 @@ export default function Navbar() {
         {/* Brand Logo */}
         <a
           href="#home"
-          className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded-lg p-1"
+          className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-pink-400 rounded-lg p-1"
         >
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-purple-600 p-[1px] shadow-[0_0_15px_rgba(0,240,255,0.4)] group-hover:shadow-[0_0_22px_rgba(0,240,255,0.7)] transition-all">
-            <div className="w-full h-full bg-[#070b19] rounded-[11px] flex items-center justify-center">
-              <span className="font-extrabold text-sm tracking-wider text-cyan-300 group-hover:text-white transition-colors">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-pink-500 via-rose-500 to-purple-600 p-[1px] shadow-[0_0_15px_rgba(236,72,153,0.4)] group-hover:shadow-[0_0_22px_rgba(236,72,153,0.7)] transition-all">
+            <div className="w-full h-full bg-[#0c041c] rounded-[11px] flex items-center justify-center">
+              <span className="font-extrabold text-sm tracking-wider text-pink-300 group-hover:text-white transition-colors">
                 MSP
               </span>
             </div>
           </div>
           <div className="flex flex-col">
-            <span className="text-base font-bold tracking-tight text-white group-hover:text-cyan-300 transition-colors">
+            <span className="text-base font-bold tracking-tight text-white group-hover:text-pink-300 transition-colors">
               Mohana Srija Puram
             </span>
-            <span className="text-[10px] font-mono text-cyan-400/70 tracking-wider uppercase">
+            <span className="text-[10px] font-mono text-pink-400/80 tracking-wider uppercase">
               CS Engineer • AI/ML
             </span>
           </div>
         </a>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-1 bg-[#0b112c]/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-cyan-500/20 shadow-inner">
+        <nav className="hidden lg:flex items-center gap-1 bg-[#14062c]/70 backdrop-blur-md px-3 py-1.5 rounded-full border border-pink-500/25 shadow-inner">
           {navLinks.map((link) => {
             const isActive = activeSection === link.href.substring(1);
             return (
@@ -83,8 +83,8 @@ export default function Navbar() {
                 href={link.href}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
                   isActive
-                    ? 'bg-gradient-to-r from-cyan-500/20 to-purple-500/20 text-cyan-300 border border-cyan-400/40 shadow-[0_0_12px_rgba(0,240,255,0.3)]'
-                    : 'text-slate-300 hover:text-white hover:bg-white/5'
+                    ? 'bg-gradient-to-r from-pink-500/25 to-purple-500/25 text-pink-300 border border-pink-400/50 shadow-[0_0_12px_rgba(236,72,153,0.35)] font-bold'
+                    : 'text-pink-100/70 hover:text-white hover:bg-white/5'
                 }`}
               >
                 {link.name}
@@ -95,33 +95,38 @@ export default function Navbar() {
 
         {/* Quick CTA Actions */}
         <div className="hidden sm:flex items-center gap-3">
+          {/* Theme Indicator */}
+          <div className="hidden xl:flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#160630] border border-pink-500/30 text-[11px] font-mono text-pink-300">
+            <Palette className="w-3 h-3 text-pink-400" />
+            <span>Royal Violet & Rose</span>
+          </div>
+
           <a
             href={portfolioData.personal.resumePath}
             download="Mohana-Srija-Puram-Resume.pdf"
-            className="px-4 py-2 rounded-full text-xs font-semibold bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white shadow-[0_0_15px_rgba(0,240,255,0.4)] hover:shadow-[0_0_25px_rgba(0,240,255,0.7)] flex items-center gap-1.5 transition-all transform hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+            className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white shadow-[0_0_18px_rgba(236,72,153,0.45)] transition-all duration-200 transform hover:-translate-y-0.5"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Resume</span>
           </a>
         </div>
 
-        {/* Mobile Menu Button */}
-        <div className="lg:hidden flex items-center gap-2">
+        {/* Mobile menu button */}
+        <div className="flex lg:hidden items-center gap-2">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg bg-[#0b112c]/70 border border-cyan-500/30 text-slate-200 hover:text-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-400"
-            aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
-            aria-expanded={mobileMenuOpen}
+            className="p-2 rounded-xl bg-purple-950/60 border border-pink-500/30 text-pink-200 hover:text-white focus:outline-none"
+            aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile dropdown menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#070b19]/95 backdrop-blur-2xl border-b border-cyan-500/30 px-6 py-6 shadow-2xl animate-fadeIn">
-          <nav className="flex flex-col gap-2">
+        <div className="lg:hidden bg-[#0a0316]/98 backdrop-blur-2xl border-b border-pink-500/30 px-4 pt-4 pb-6 mt-3 animate-fadeIn">
+          <div className="flex flex-col space-y-2">
             {navLinks.map((link) => {
               const isActive = activeSection === link.href.substring(1);
               return (
@@ -129,28 +134,27 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   onClick={closeMobile}
-                  className={`px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                  className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
                     isActive
-                      ? 'bg-cyan-500/15 text-cyan-300 border border-cyan-400/40 shadow-[0_0_15px_rgba(0,240,255,0.2)]'
-                      : 'text-slate-300 hover:bg-white/5 hover:text-white'
+                      ? 'bg-gradient-to-r from-pink-600/30 to-purple-600/30 text-pink-300 border border-pink-400/40'
+                      : 'text-slate-300 hover:text-white hover:bg-white/5'
                   }`}
                 >
                   {link.name}
                 </a>
               );
             })}
-            <div className="pt-4 mt-2 border-t border-slate-800 flex flex-col gap-2">
+            <div className="pt-3 border-t border-purple-900/50 flex gap-2">
               <a
                 href={portfolioData.personal.resumePath}
                 download="Mohana-Srija-Puram-Resume.pdf"
-                onClick={closeMobile}
-                className="w-full py-3 rounded-xl text-center text-sm font-semibold bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-lg flex items-center justify-center gap-2"
+                className="flex-1 py-2.5 px-4 rounded-xl text-xs font-semibold bg-gradient-to-r from-pink-600 to-purple-600 text-white flex items-center justify-center gap-2"
               >
                 <Download className="w-4 h-4" />
-                <span>Download Resume (PDF)</span>
+                <span>Download Resume</span>
               </a>
             </div>
-          </nav>
+          </div>
         </div>
       )}
     </header>

@@ -1,126 +1,77 @@
 import React from 'react';
-import { ExternalLink, CheckCircle } from 'lucide-react';
+import { Briefcase, Calendar, MapPin } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 
 export default function ExperienceTimeline() {
-  const { experience } = portfolioData;
-
-  const timelineMilestones = [
-    {
-      id: 'vignan',
-      period: '2024 - 2028',
-      role: 'B.Tech CSE',
-      company: "Vignan's University",
-      type: 'Education & Systems Core',
-      desc: 'Pursuing undergraduate degree in Computer Science and Engineering with 8.15 CGPA.',
-      certPdf: null,
-    },
-    {
-      id: 'prodigy',
-      period: '2024',
-      role: 'Web Development Intern',
-      company: 'Prodigy InfoTech',
-      type: 'Internship',
-      desc: 'Built landing pages, stopwatch, interactive Tic-Tac-Toe, and weather API web applications.',
-      certPdf: './certificates/prodigy-internship-certificate.pdf',
-    },
-    {
-      id: 'codealpha',
-      period: '2024',
-      role: 'Python & App Developer Intern',
-      company: 'CodeAlpha',
-      type: 'Internship',
-      desc: 'Engineered Fitness Tracker App, Language Learning Platform, and Smart Flashcards Hub.',
-      certPdf: './certificates/codealpha-internship-certificate.pdf',
-    },
-    {
-      id: 'unified',
-      period: 'Commencing 2026',
-      role: 'AI / ML Intern',
-      company: 'Unified Mentor',
-      type: 'Upcoming Internship',
-      desc: 'Selected for advanced industry internship focusing on real-world AI/ML deployments.',
-      certPdf: './certificates/unified-mentor-offer-letter.pdf',
-    },
-    {
-      id: 'chess',
-      period: 'Present',
-      role: 'National Chess Coordinator',
-      company: '62nd National Chess Championship',
-      type: 'Leadership & Extracurricular',
-      desc: 'Directed national tournament operations at Vignan University; actively expanding software & AI projects.',
-      certPdf: null,
-    },
-  ];
+  const { timeline } = portfolioData;
 
   return (
-    <div>
-      <div className="text-center mb-12">
+    <div className="mt-20">
+      <div className="text-center mb-14">
         <h3 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-          Experience Timeline
+          Experience & Education Journey
         </h3>
-        <p className="text-slate-400 text-xs sm:text-sm mt-1 font-mono">
-          My professional journey
+        <p className="text-pink-200/70 text-xs sm:text-sm mt-1 font-mono">
+          Milestones across engineering, internships, and national leadership
         </p>
       </div>
 
-      {/* Flowing Circuit Timeline matching Slide 8 */}
-      <div className="relative max-w-5xl mx-auto p-6 sm:p-10 rounded-3xl bg-[#060b1e]/90 backdrop-blur-2xl border border-purple-500/30 shadow-[0_0_50px_rgba(168,85,247,0.15)]">
-        {/* Glowing S-Curve Pipeline Indicator */}
-        <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 top-16 bottom-16 w-1 bg-gradient-to-b from-cyan-400 via-purple-500 to-pink-500 shadow-[0_0_12px_#a855f7]" />
+      {/* Storyboard Slide 8: Glowing S-Curve Circuit Line with 5 Milestones */}
+      <div className="relative max-w-4xl mx-auto px-4">
+        {/* The Central Glowing Multi-Stop Circuit Track */}
+        <div className="absolute left-4 sm:left-1/2 top-4 bottom-4 w-1 -translate-x-1/2 bg-gradient-to-b from-pink-500 via-purple-500 to-rose-500 shadow-[0_0_20px_rgba(236,72,153,0.8)] rounded-full" />
 
-        <div className="space-y-8 relative z-10">
-          {timelineMilestones.map((item, idx) => {
-            const isEven = idx % 2 === 0;
+        <div className="space-y-12 relative">
+          {timeline.map((item, index) => {
+            const isEven = index % 2 === 0;
             return (
               <div
                 key={item.id}
-                className={`flex flex-col lg:flex-row items-center gap-6 ${
-                  isEven ? 'lg:flex-row-reverse text-left' : 'text-left'
-                }`}
+                className={`relative flex flex-col sm:flex-row items-start ${
+                  isEven ? 'sm:flex-row-reverse' : ''
+                } gap-8 group`}
               >
-                {/* Milestone Card */}
-                <div className="w-full lg:w-[45%] p-5 rounded-2xl bg-[#040714] border border-slate-800 hover:border-purple-400/60 transition-all group">
-                  <div className="flex items-center justify-between gap-2 mb-2">
-                    <span className="text-xs font-mono px-3 py-0.5 rounded-full bg-purple-500/15 border border-purple-400/40 text-purple-300">
-                      {item.period}
+                {/* Glowing Numbered Circuit Pin matching Storyboard */}
+                <div className="absolute left-4 sm:left-1/2 -translate-x-1/2 w-9 h-9 rounded-full bg-[#0a0316] border-2 border-pink-400 text-pink-300 font-mono font-black text-xs flex items-center justify-center shadow-[0_0_20px_#ec4899] z-20 group-hover:scale-125 group-hover:bg-pink-500 group-hover:text-white transition-all">
+                  {item.step}
+                </div>
+
+                {/* Milestone Content Card */}
+                <div
+                  className={`ml-12 sm:ml-0 sm:w-1/2 ${
+                    isEven ? 'sm:pr-12 text-left sm:text-right' : 'sm:pl-12 text-left'
+                  }`}
+                >
+                  <div className="p-6 rounded-3xl bg-[#120528]/90 backdrop-blur-xl border border-purple-900/60 group-hover:border-pink-400/60 shadow-[0_10px_35px_rgba(0,0,0,0.5)] group-hover:shadow-[0_10px_40px_rgba(236,72,153,0.2)] transition-all duration-300">
+                    <span className="inline-block px-3 py-1 rounded-full text-xs font-mono bg-pink-500/15 border border-pink-400/40 text-pink-300 mb-2">
+                      {item.role}
                     </span>
-                    <span className="text-[11px] font-mono text-slate-400">
-                      {item.type}
-                    </span>
-                  </div>
 
-                  <h4 className="text-base sm:text-lg font-bold text-white group-hover:text-cyan-300 transition-colors">
-                    {item.role}
-                  </h4>
-                  <p className="text-xs font-semibold text-purple-300 font-mono mb-2">
-                    {item.company}
-                  </p>
+                    <h4 className="text-lg font-bold text-white group-hover:text-pink-300 transition-colors">
+                      {item.title}
+                    </h4>
 
-                  <p className="text-xs text-slate-300 leading-relaxed mb-3">
-                    {item.desc}
-                  </p>
-
-                  {item.certPdf && (
-                    <a
-                      href={item.certPdf}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-300 hover:underline"
+                    <div
+                      className={`flex flex-wrap items-center gap-3 text-xs font-mono text-purple-300/80 my-2 ${
+                        isEven ? 'sm:justify-end' : 'justify-start'
+                      }`}
                     >
-                      <CheckCircle className="w-3.5 h-3.5" />
-                      <span>View Credential Document</span>
-                      <ExternalLink className="w-3 h-3" />
-                    </a>
-                  )}
-                </div>
+                      <span className="flex items-center gap-1">
+                        <Calendar className="w-3.5 h-3.5 text-pink-400" />
+                        <span>{item.period}</span>
+                      </span>
+                      <span>•</span>
+                      <span className="flex items-center gap-1">
+                        <MapPin className="w-3.5 h-3.5 text-rose-400" />
+                        <span>{item.location}</span>
+                      </span>
+                    </div>
 
-                {/* Center Pin Node */}
-                <div className="hidden lg:flex w-10 h-10 rounded-full bg-[#070b19] border-2 border-cyan-400 shadow-[0_0_12px_#00f0ff] items-center justify-center text-xs font-mono font-bold text-white z-20">
-                  {idx + 1}
+                    <p className="text-xs text-pink-100/80 leading-relaxed mt-2">
+                      {item.desc}
+                    </p>
+                  </div>
                 </div>
-
-                <div className="hidden lg:block w-[45%]" />
               </div>
             );
           })}

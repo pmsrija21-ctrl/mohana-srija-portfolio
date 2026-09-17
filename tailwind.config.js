@@ -8,26 +8,26 @@ export default {
     extend: {
       colors: {
         cosmic: {
-          950: '#030712',
-          900: '#070b19',
-          850: '#0b112c',
-          800: '#0f1738',
-          700: '#16204d',
+          950: '#06020e',
+          900: '#0c041c',
+          850: '#14062c',
+          800: '#1c093c',
+          700: '#280c54',
         },
-        cyanGlow: '#00f0ff',
-        purpleGlow: '#a855f7',
-        magentaGlow: '#ec4899',
-        neonBlue: '#38bdf8'
+        roseGlow: '#ec4899',
+        violetGlow: '#a855f7',
+        magentaGlow: '#f43f5e',
+        orchidGlow: '#c084fc'
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'monospace']
       },
       boxShadow: {
-        'glow-cyan': '0 0 25px -5px rgba(0, 240, 255, 0.4)',
-        'glow-purple': '0 0 25px -5px rgba(168, 85, 247, 0.4)',
-        'glow-card': '0 8px 32px 0 rgba(0, 240, 255, 0.1)',
-        'glow-pill': '0 0 15px 0 rgba(0, 240, 255, 0.35)',
+        'glow-rose': '0 0 25px -5px rgba(236, 72, 153, 0.45)',
+        'glow-violet': '0 0 25px -5px rgba(168, 85, 247, 0.45)',
+        'glow-card': '0 8px 32px 0 rgba(236, 72, 153, 0.12)',
+        'glow-pill': '0 0 15px 0 rgba(236, 72, 153, 0.35)',
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',

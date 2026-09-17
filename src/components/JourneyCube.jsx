@@ -74,8 +74,8 @@ export default function JourneyCube() {
         Explore My Journey
       </h3>
 
-      <div className="flex items-center justify-center gap-3 mb-10 text-xs font-mono text-slate-400">
-        <span className="flex items-center gap-1 text-cyan-300">
+      <div className="flex items-center justify-center gap-3 mb-10 text-xs font-mono text-pink-200/70">
+        <span className="flex items-center gap-1 text-pink-400">
           <RotateCw className="w-3.5 h-3.5 animate-spin" style={{ animationDuration: '8s' }} />
           <span>Auto-Rotating 3D Cube</span>
         </span>
@@ -86,7 +86,7 @@ export default function JourneyCube() {
         </span>
       </div>
 
-      {/* 3D Interactive Rotating Cube on Glowing Circular Pedestal matching Slide 4 */}
+      {/* 3D Interactive Rotating Cube on Glowing Circular Pedestal in Royal Violet & Neon Rose */}
       <div
         className="relative w-72 h-72 mx-auto cursor-grab active:cursor-grabbing flex items-center justify-center touch-none"
         onMouseDown={handleMouseDown}
@@ -112,47 +112,47 @@ export default function JourneyCube() {
         >
           {/* Front Face: Projects */}
           <div
-            className="absolute inset-0 rounded-2xl bg-[#080d24]/95 border-2 border-cyan-400/80 p-4 flex flex-col items-center justify-center text-cyan-300 shadow-[0_0_25px_rgba(0,240,255,0.5)] backdrop-blur-md"
+            className="absolute inset-0 rounded-2xl bg-[#1a0730]/95 border-2 border-pink-400/80 p-4 flex flex-col items-center justify-center text-pink-300 shadow-[0_0_25px_rgba(236,72,153,0.5)] backdrop-blur-md"
             style={{ transform: 'translateZ(80px)' }}
           >
-            <Code2 className="w-8 h-8 mb-2 text-cyan-300" />
+            <Code2 className="w-8 h-8 mb-2 text-pink-300" />
             <span className="text-sm font-bold font-mono">Projects</span>
-            <span className="text-[10px] text-slate-400 mt-1">4 Core Works</span>
+            <span className="text-[10px] text-pink-200/60 mt-1">4 Core Works</span>
           </div>
 
           {/* Right Face: Experience */}
           <div
-            className="absolute inset-0 rounded-2xl bg-[#140a28]/95 border-2 border-purple-400/80 p-4 flex flex-col items-center justify-center text-purple-300 shadow-[0_0_25px_rgba(168,85,247,0.5)] backdrop-blur-md"
+            className="absolute inset-0 rounded-2xl bg-[#24083c]/95 border-2 border-purple-400/80 p-4 flex flex-col items-center justify-center text-purple-300 shadow-[0_0_25px_rgba(168,85,247,0.5)] backdrop-blur-md"
             style={{ transform: 'rotateY(90deg) translateZ(80px)' }}
           >
             <Briefcase className="w-8 h-8 mb-2 text-purple-300" />
             <span className="text-sm font-bold font-mono">Experience</span>
-            <span className="text-[10px] text-slate-400 mt-1">3 Internships</span>
+            <span className="text-[10px] text-purple-200/60 mt-1">3 Internships</span>
           </div>
 
           {/* Back Face: Skills */}
           <div
-            className="absolute inset-0 rounded-2xl bg-[#041624]/95 border-2 border-sky-400/80 p-4 flex flex-col items-center justify-center text-sky-300 shadow-[0_0_25px_rgba(56,189,248,0.5)] backdrop-blur-md"
+            className="absolute inset-0 rounded-2xl bg-[#14062a]/95 border-2 border-rose-400/80 p-4 flex flex-col items-center justify-center text-rose-300 shadow-[0_0_25px_rgba(244,63,94,0.5)] backdrop-blur-md"
             style={{ transform: 'rotateY(180deg) translateZ(80px)' }}
           >
-            <Sparkles className="w-8 h-8 mb-2 text-sky-300" />
+            <Sparkles className="w-8 h-8 mb-2 text-rose-300" />
             <span className="text-sm font-bold font-mono">Skills</span>
-            <span className="text-[10px] text-slate-400 mt-1">MERN, AI, DSA</span>
+            <span className="text-[10px] text-rose-200/60 mt-1">MERN, AI, DSA</span>
           </div>
 
           {/* Left Face: Certificates */}
           <div
-            className="absolute inset-0 rounded-2xl bg-[#1a0822]/95 border-2 border-pink-400/80 p-4 flex flex-col items-center justify-center text-pink-300 shadow-[0_0_25px_rgba(236,72,153,0.5)] backdrop-blur-md"
+            className="absolute inset-0 rounded-2xl bg-[#2c0838]/95 border-2 border-fuchsia-400/80 p-4 flex flex-col items-center justify-center text-fuchsia-300 shadow-[0_0_25px_rgba(217,70,239,0.5)] backdrop-blur-md"
             style={{ transform: 'rotateY(-90deg) translateZ(80px)' }}
           >
-            <Award className="w-8 h-8 mb-2 text-pink-300" />
+            <Award className="w-8 h-8 mb-2 text-fuchsia-300" />
             <span className="text-sm font-bold font-mono">Certificates</span>
-            <span className="text-[10px] text-slate-400 mt-1">11+ Verified</span>
+            <span className="text-[10px] text-fuchsia-200/60 mt-1">11+ Verified</span>
           </div>
 
           {/* Top Face */}
           <div
-            className="absolute inset-0 rounded-2xl bg-[#070b1e]/95 border-2 border-cyan-300/60 p-2 flex items-center justify-center text-cyan-200"
+            className="absolute inset-0 rounded-2xl bg-[#110526]/95 border-2 border-pink-300/60 p-2 flex items-center justify-center text-pink-200"
             style={{ transform: 'rotateX(90deg) translateZ(80px)' }}
           >
             <span className="text-xs font-mono font-bold">MSP 2026</span>
@@ -160,24 +160,24 @@ export default function JourneyCube() {
 
           {/* Bottom Face */}
           <div
-            className="absolute inset-0 rounded-2xl bg-[#070b1e]/95 border-2 border-purple-300/60"
+            className="absolute inset-0 rounded-2xl bg-[#110526]/95 border-2 border-purple-300/60"
             style={{ transform: 'rotateX(-90deg) translateZ(80px)' }}
           />
         </div>
 
-        {/* Glowing Circular Pedestal Beneath Cube */}
-        <div className="absolute -bottom-8 w-60 h-10 rounded-[100%] border-2 border-cyan-400/60 bg-gradient-to-r from-cyan-400/20 via-purple-500/20 to-cyan-400/20 blur-[2px] shadow-[0_0_35px_#00f0ff] pointer-events-none" />
+        {/* Glowing Circular Pedestal Beneath Cube in Neon Rose and Violet */}
+        <div className="absolute -bottom-8 w-60 h-10 rounded-[100%] border-2 border-pink-400/60 bg-gradient-to-r from-pink-400/20 via-purple-500/25 to-rose-400/20 blur-[2px] shadow-[0_0_35px_#ec4899] pointer-events-none" />
       </div>
 
       {/* Quick Jump Bar */}
       <div className="flex flex-wrap justify-center gap-3 mt-14 max-w-xl mx-auto">
-        <a href="#projects" className="px-4 py-1.5 rounded-full text-xs font-mono bg-cyan-500/15 border border-cyan-400/40 text-cyan-300 hover:bg-cyan-500 hover:text-slate-950 transition-all">
+        <a href="#projects" className="px-4 py-1.5 rounded-full text-xs font-mono bg-pink-500/15 border border-pink-400/40 text-pink-300 hover:bg-pink-500 hover:text-white transition-all shadow-[0_0_15px_rgba(236,72,153,0.2)]">
           View Projects →
         </a>
-        <a href="#skills-experience" className="px-4 py-1.5 rounded-full text-xs font-mono bg-purple-500/15 border border-purple-400/40 text-purple-300 hover:bg-purple-500 hover:text-white transition-all">
+        <a href="#skills-experience" className="px-4 py-1.5 rounded-full text-xs font-mono bg-purple-500/15 border border-purple-400/40 text-purple-300 hover:bg-purple-500 hover:text-white transition-all shadow-[0_0_15px_rgba(168,85,247,0.2)]">
           View Skills & Timeline →
         </a>
-        <a href="#certificates-resume" className="px-4 py-1.5 rounded-full text-xs font-mono bg-pink-500/15 border border-pink-400/40 text-pink-300 hover:bg-pink-500 hover:text-white transition-all">
+        <a href="#certificates-resume" className="px-4 py-1.5 rounded-full text-xs font-mono bg-rose-500/15 border border-rose-400/40 text-rose-300 hover:bg-rose-500 hover:text-white transition-all shadow-[0_0_15px_rgba(244,63,94,0.2)]">
           View Certificates →
         </a>
       </div>

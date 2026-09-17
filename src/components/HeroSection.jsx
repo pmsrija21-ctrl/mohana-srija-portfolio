@@ -20,11 +20,11 @@ export default function HeroSection() {
               {personal.name}
             </h1>
 
-            <h2 className="text-lg sm:text-2xl font-semibold text-cyan-300 mb-5 font-mono">
+            <h2 className="text-lg sm:text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-rose-300 to-purple-300 mb-5 font-mono">
               Computer Science Engineer | AI/ML Enthusiast | Problem Solver
             </h2>
 
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6 max-w-xl">
+            <p className="text-pink-100/90 text-sm sm:text-base leading-relaxed mb-6 max-w-xl">
               I build intelligent solutions for real-world problems, combining technology, creativity and purpose.
             </p>
 
@@ -32,7 +32,7 @@ export default function HeroSection() {
             <div className="flex flex-wrap items-center gap-4 mb-8">
               <a
                 href="#projects"
-                className="px-6 py-3.5 rounded-full text-xs sm:text-sm font-semibold bg-gradient-to-r from-purple-600 via-purple-500 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-[0_0_25px_rgba(168,85,247,0.5)] flex items-center gap-2 transition-all transform hover:-translate-y-0.5"
+                className="px-6 py-3.5 rounded-full text-xs sm:text-sm font-semibold bg-gradient-to-r from-pink-600 via-purple-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white shadow-[0_0_25px_rgba(236,72,153,0.5)] flex items-center gap-2 transition-all transform hover:-translate-y-0.5"
               >
                 <span>View My Projects</span>
                 <ArrowRight className="w-4 h-4" />
@@ -41,24 +41,24 @@ export default function HeroSection() {
               <a
                 href={personal.resumePath}
                 download="Mohana-Srija-Puram-Resume.pdf"
-                className="px-6 py-3.5 rounded-full text-xs sm:text-sm font-semibold bg-[#070b19]/90 hover:bg-[#0e1633] border border-cyan-400/50 text-cyan-300 hover:text-white shadow-[0_0_15px_rgba(0,240,255,0.25)] flex items-center gap-2 transition-all transform hover:-translate-y-0.5"
+                className="px-6 py-3.5 rounded-full text-xs sm:text-sm font-semibold bg-[#110526]/90 hover:bg-[#1a083a] border border-pink-400/50 text-pink-300 hover:text-white shadow-[0_0_15px_rgba(236,72,153,0.25)] flex items-center gap-2 transition-all transform hover:-translate-y-0.5"
               >
-                <Download className="w-4 h-4 text-cyan-400" />
+                <Download className="w-4 h-4 text-pink-400" />
                 <span>Download Resume</span>
               </a>
 
-              <div className="ml-2 italic font-serif text-cyan-300 text-sm drop-shadow-[0_0_10px_rgba(0,240,255,0.7)] select-none">
+              <div className="ml-2 italic font-serif text-pink-300 text-sm drop-shadow-[0_0_10px_rgba(236,72,153,0.8)] select-none">
                 ~ Better Ideas. Brighter Future.
               </div>
             </div>
 
-            {/* Social Links (Clean icons matching Slide 2) */}
+            {/* Social Links */}
             <div className="flex items-center gap-4 pt-2">
               <a
                 href={personal.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-full bg-slate-900/80 border border-slate-700 hover:border-cyan-400 text-slate-300 hover:text-cyan-300 hover:shadow-[0_0_15px_rgba(0,240,255,0.4)] transition-all"
+                className="p-2.5 rounded-full bg-purple-950/60 border border-purple-800/80 hover:border-pink-400 text-purple-200 hover:text-pink-300 hover:shadow-[0_0_15px_rgba(236,72,153,0.45)] transition-all"
                 aria-label="GitHub Profile"
               >
                 <GithubIcon className="w-4 h-4" />
@@ -68,7 +68,7 @@ export default function HeroSection() {
                 href={personal.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-full bg-slate-900/80 border border-slate-700 hover:border-purple-400 text-slate-300 hover:text-purple-300 hover:shadow-[0_0_15px_rgba(168,85,247,0.4)] transition-all"
+                className="p-2.5 rounded-full bg-purple-950/60 border border-purple-800/80 hover:border-purple-400 text-purple-200 hover:text-purple-300 hover:shadow-[0_0_15px_rgba(168,85,247,0.45)] transition-all"
                 aria-label="LinkedIn Profile"
               >
                 <LinkedinIcon className="w-4 h-4" />
@@ -76,7 +76,7 @@ export default function HeroSection() {
 
               <a
                 href={`mailto:${personal.email}`}
-                className="p-2.5 rounded-full bg-slate-900/80 border border-slate-700 hover:border-cyan-400 text-slate-300 hover:text-cyan-300 hover:shadow-[0_0_15px_rgba(0,240,255,0.4)] transition-all"
+                className="p-2.5 rounded-full bg-purple-950/60 border border-purple-800/80 hover:border-rose-400 text-purple-200 hover:text-rose-300 hover:shadow-[0_0_15px_rgba(244,63,94,0.45)] transition-all"
                 aria-label="Email Address"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -87,7 +87,7 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Right Hero Column: Cosmic Silhouette Artwork matching Slide 2 */}
+          {/* Right Hero Column: Cosmic Silhouette Artwork */}
           <div className="lg:col-span-5 flex items-center justify-center">
             <CosmicSilhouette />
           </div>

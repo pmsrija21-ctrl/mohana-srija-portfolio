@@ -14,9 +14,11 @@ export default function CosmicBackground() {
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Generate stars
+    // Generate stars with Violet, Rose, Magenta, Orchid, and White colors
     const starCount = Math.floor((width * height) / 8000);
     const stars = [];
+
+    const starColors = ['#ec4899', '#a855f7', '#f43f5e', '#c084fc', '#ffffff', '#fb7185'];
 
     for (let i = 0; i < starCount; i++) {
       stars.push({
@@ -27,7 +29,7 @@ export default function CosmicBackground() {
         speed: (Math.random() * 0.15 + 0.05) * (prefersReducedMotion ? 0 : 1),
         pulseSpeed: Math.random() * 0.02 + 0.005,
         pulseOffset: Math.random() * Math.PI * 2,
-        color: Math.random() > 0.6 ? '#00f0ff' : Math.random() > 0.3 ? '#a855f7' : '#ffffff',
+        color: starColors[Math.floor(Math.random() * starColors.length)],
       });
     }
 
@@ -58,7 +60,7 @@ export default function CosmicBackground() {
 
       ctx.clearRect(0, 0, width, height);
 
-      // Deep space subtle gradient
+      // Deep space subtle gradient in cosmic royal violet
       const bgGrad = ctx.createRadialGradient(
         mouseX,
         mouseY,
@@ -67,24 +69,24 @@ export default function CosmicBackground() {
         height / 2,
         Math.max(width, height)
       );
-      bgGrad.addColorStop(0, 'rgba(11, 17, 44, 0.4)');
-      bgGrad.addColorStop(0.5, 'rgba(7, 11, 25, 0.7)');
-      bgGrad.addColorStop(1, 'rgba(3, 7, 18, 0.95)');
+      bgGrad.addColorStop(0, 'rgba(28, 10, 48, 0.45)');
+      bgGrad.addColorStop(0.5, 'rgba(16, 6, 30, 0.75)');
+      bgGrad.addColorStop(1, 'rgba(6, 2, 14, 0.98)');
 
       ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, width, height);
 
-      // Nebula glow clouds
+      // Nebula glow clouds in vivid rose and royal violet
       ctx.save();
       ctx.filter = 'blur(60px)';
-      const neb1 = ctx.createRadialGradient(width * 0.2, height * 0.3, 20, width * 0.2, height * 0.3, 350);
-      neb1.addColorStop(0, 'rgba(0, 240, 255, 0.06)');
+      const neb1 = ctx.createRadialGradient(width * 0.25, height * 0.35, 20, width * 0.25, height * 0.35, 380);
+      neb1.addColorStop(0, 'rgba(236, 72, 153, 0.12)');
       neb1.addColorStop(1, 'transparent');
       ctx.fillStyle = neb1;
       ctx.fillRect(0, 0, width, height);
 
-      const neb2 = ctx.createRadialGradient(width * 0.8, height * 0.7, 20, width * 0.8, height * 0.7, 400);
-      neb2.addColorStop(0, 'rgba(168, 85, 247, 0.07)');
+      const neb2 = ctx.createRadialGradient(width * 0.8, height * 0.65, 20, width * 0.8, height * 0.65, 420);
+      neb2.addColorStop(0, 'rgba(168, 85, 247, 0.14)');
       neb2.addColorStop(1, 'transparent');
       ctx.fillStyle = neb2;
       ctx.fillRect(0, 0, width, height);

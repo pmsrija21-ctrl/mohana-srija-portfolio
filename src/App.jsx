@@ -12,7 +12,7 @@ import Footer from './components/Footer';
 
 export default function App() {
   return (
-    <div className="relative min-h-screen bg-[#030712] text-slate-100 selection:bg-cyan-500/30 selection:text-cyan-200">
+    <div className="relative min-h-screen bg-[#06020e] text-pink-100 selection:bg-pink-500/30 selection:text-pink-200">
       {/* Dynamic Cosmic Starfield Background */}
       <CosmicBackground />
 
