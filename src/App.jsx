@@ -1,4 +1,5 @@
 import React from 'react';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
 import CosmicBackground from './components/CosmicBackground';
 import Navbar from './components/Navbar';
 import IntroGlobeScreen from './components/IntroGlobeScreen';
@@ -9,15 +10,24 @@ import SkillsExperienceSection from './components/SkillsExperienceSection';
 import CertificatesResumeSection from './components/CertificatesResumeSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
+import ThemeSwitcher from './components/ThemeSwitcher';
 
-export default function App() {
+function MainApp() {
+  const { currentTheme } = useTheme();
+
   return (
-    <div className="relative min-h-screen bg-[#06020e] text-pink-100 selection:bg-pink-500/30 selection:text-pink-200">
+    <div
+      className="relative min-h-screen text-slate-100 selection:bg-pink-500/30 selection:text-pink-200 transition-colors duration-500"
+      style={{ backgroundColor: currentTheme.bg }}
+    >
       {/* Dynamic Cosmic Starfield Background */}
       <CosmicBackground />
 
-      {/* Fixed Glassmorphic Navigation */}
+      {/* Fixed Glassmorphic Navigation with Theme Dropdown */}
       <Navbar />
+
+      {/* Floating Theme Switcher Widget */}
+      <ThemeSwitcher />
 
       {/* Storyboard Tile 1: Opening Giant Celestial MSP Globe Screen */}
       <IntroGlobeScreen />
@@ -46,5 +56,13 @@ export default function App() {
       {/* Footer (Storyboard Tile 16) */}
       <Footer />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <MainApp />
+    </ThemeProvider>
   );
 }

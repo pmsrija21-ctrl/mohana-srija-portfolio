@@ -1,7 +1,9 @@
 import React, { useEffect, useRef } from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 export default function CosmicBackground() {
   const canvasRef = useRef(null);
+  const { currentTheme } = useTheme();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -14,11 +16,11 @@ export default function CosmicBackground() {
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Generate stars with Violet, Rose, Magenta, Orchid, and White colors
+    // Generate stars using current theme star colors
     const starCount = Math.floor((width * height) / 8000);
     const stars = [];
 
-    const starColors = ['#ec4899', '#a855f7', '#f43f5e', '#c084fc', '#ffffff', '#fb7185'];
+    const starColors = currentTheme.stars;
 
     for (let i = 0; i < starCount; i++) {
       stars.push({
@@ -60,7 +62,7 @@ export default function CosmicBackground() {
 
       ctx.clearRect(0, 0, width, height);
 
-      // Deep space subtle gradient in cosmic royal violet
+      // Deep space subtle gradient in current theme background
       const bgGrad = ctx.createRadialGradient(
         mouseX,
         mouseY,
@@ -69,24 +71,24 @@ export default function CosmicBackground() {
         height / 2,
         Math.max(width, height)
       );
-      bgGrad.addColorStop(0, 'rgba(28, 10, 48, 0.45)');
-      bgGrad.addColorStop(0.5, 'rgba(16, 6, 30, 0.75)');
-      bgGrad.addColorStop(1, 'rgba(6, 2, 14, 0.98)');
+      bgGrad.addColorStop(0, `${currentTheme.cardBg}88`);
+      bgGrad.addColorStop(0.5, `${currentTheme.bg}cc`);
+      bgGrad.addColorStop(1, currentTheme.bg);
 
       ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, width, height);
 
-      // Nebula glow clouds in vivid rose and royal violet
+      // Dynamic Nebula glow clouds
       ctx.save();
       ctx.filter = 'blur(60px)';
       const neb1 = ctx.createRadialGradient(width * 0.25, height * 0.35, 20, width * 0.25, height * 0.35, 380);
-      neb1.addColorStop(0, 'rgba(236, 72, 153, 0.12)');
+      neb1.addColorStop(0, currentTheme.neb1);
       neb1.addColorStop(1, 'transparent');
       ctx.fillStyle = neb1;
       ctx.fillRect(0, 0, width, height);
 
       const neb2 = ctx.createRadialGradient(width * 0.8, height * 0.65, 20, width * 0.8, height * 0.65, 420);
-      neb2.addColorStop(0, 'rgba(168, 85, 247, 0.14)');
+      neb2.addColorStop(0, currentTheme.neb2);
       neb2.addColorStop(1, 'transparent');
       ctx.fillStyle = neb2;
       ctx.fillRect(0, 0, width, height);
@@ -128,12 +130,12 @@ export default function CosmicBackground() {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [currentTheme]);
 
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0"
+      className="fixed inset-0 pointer-events-none z-0 transition-opacity duration-700"
       style={{ opacity: 0.95 }}
       aria-hidden="true"
     />
