@@ -181,10 +181,12 @@ export default function CertificatesResumeSection() {
       </div>
 
       {/* Interactive Certificate PDF Modal */}
-      <CertificateModal
-        certificate={activeCert}
-        onClose={() => setActiveCert(null)}
-      />
+      {activeCert && (
+        <CertificateModal
+          certificate={activeCert}
+          onClose={() => setActiveCert(null)}
+        />
+      )}
     </section>
   );
 }

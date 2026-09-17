@@ -5,11 +5,17 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
   }
   body {
     background-color: #030712;
     color: #f1f5f9;
     overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 100%;
+    position: relative;
   }
   ::-webkit-scrollbar {
     width: 8px;

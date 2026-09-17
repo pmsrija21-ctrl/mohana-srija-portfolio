@@ -1,18 +1,21 @@
 import React, { useEffect } from 'react';
-import { X, Download, ExternalLink, Award, FileText } from 'lucide-react';
+import { X, Download, ExternalLink, Award } from 'lucide-react';
 
 export default function CertificateModal({ certificate, onClose }) {
   useEffect(() => {
+    if (!certificate) return;
+
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') onClose();
     };
     window.addEventListener('keydown', handleKeyDown);
     document.body.style.overflow = 'hidden';
+
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
     };
-  }, [onClose]);
+  }, [certificate, onClose]);
 
   if (!certificate) return null;
 
@@ -28,7 +31,6 @@ export default function CertificateModal({ certificate, onClose }) {
         className="relative w-full max-w-4xl h-[85vh] rounded-3xl bg-[#070b19] border border-cyan-400/40 p-4 sm:p-6 shadow-[0_0_60px_rgba(0,240,255,0.3)] flex flex-col justify-between"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Modal Header */}
         <div className="flex items-center justify-between pb-4 border-b border-slate-800">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-400/30 flex items-center justify-center text-cyan-300">
@@ -72,7 +74,6 @@ export default function CertificateModal({ certificate, onClose }) {
           </div>
         </div>
 
-        {/* Embedded PDF Viewer */}
         <div className="flex-1 w-full my-4 rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 relative">
           <iframe
             src={certificate.file}
@@ -81,7 +82,6 @@ export default function CertificateModal({ certificate, onClose }) {
           />
         </div>
 
-        {/* Modal Footer */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 text-xs text-slate-400">
           <p className="font-mono">
             Skills: <span className="text-slate-200">{certificate.skills}</span>
@@ -93,7 +93,7 @@ export default function CertificateModal({ certificate, onClose }) {
               rel="noopener noreferrer"
               className="text-cyan-300 hover:underline flex items-center gap-1"
             >
-              <span>Can't view preview? Open PDF directly</span>
+              <span>Open PDF directly in new tab</span>
               <ExternalLink className="w-3 h-3" />
             </a>
           </div>

@@ -211,10 +211,12 @@ export default function ProjectsSection() {
         </div>
       </div>
 
-      <ProjectModal
-        project={activeModalProject}
-        onClose={() => setActiveModalProject(null)}
-      />
+      {activeModalProject && (
+        <ProjectModal
+          project={activeModalProject}
+          onClose={() => setActiveModalProject(null)}
+        />
+      )}
     </section>
   );
 }
