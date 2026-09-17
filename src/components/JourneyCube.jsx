@@ -1,107 +1,125 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Code2, Briefcase, Award, Sparkles, Move3d } from 'lucide-react';
 
 export default function JourneyCube() {
-  const [activeFace, setActiveFace] = useState('projects');
+  const [rotX, setRotX] = useState(-15);
+  const [rotY, setRotY] = useState(25);
+  const [isDragging, setIsDragging] = useState(false);
+  const startPos = useRef({ x: 0, y: 0 });
 
-  const faces = [
-    {
-      id: 'projects',
-      title: 'Projects',
-      desc: 'Autonomous Disaster AI, Weather Travel MERN, Graph & Algorithm Visualizers',
-      icon: Code2,
-      color: 'from-cyan-500/20 to-blue-600/20 border-cyan-400/50 text-cyan-300',
-    },
-    {
-      id: 'experience',
-      title: 'Experience',
-      desc: 'CodeAlpha & Prodigy InfoTech Internships, Upcoming Unified Mentor (2026)',
-      icon: Briefcase,
-      color: 'from-purple-500/20 to-pink-600/20 border-purple-400/50 text-purple-300',
-    },
-    {
-      id: 'skills',
-      title: 'Skills',
-      desc: 'C, Python, Java, DSA, OS, MERN Stack, MySQL, MongoDB, OpenAI API',
-      icon: Sparkles,
-      color: 'from-blue-500/20 to-cyan-600/20 border-blue-400/50 text-blue-300',
-    },
-    {
-      id: 'certificates',
-      title: 'Certificates',
-      desc: '11+ verified certifications across Cisco Networking Academy, NPTEL, Tata, Unstop',
-      icon: Award,
-      color: 'from-pink-500/20 to-purple-600/20 border-pink-400/50 text-pink-300',
-    },
-  ];
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    startPos.current = { x: e.clientX, y: e.clientY };
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    const dx = e.clientX - startPos.current.x;
+    const dy = e.clientY - startPos.current.y;
+    setRotY((prev) => prev + dx * 0.5);
+    setRotX((prev) => Math.max(-60, Math.min(60, prev - dy * 0.5)));
+    startPos.current = { x: e.clientX, y: e.clientY };
+  };
+
+  const handleMouseUp = () => setIsDragging(false);
 
   return (
-    <div className="mt-16 text-center">
-      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/15 border border-purple-400/30 text-purple-300 text-xs font-mono mb-3">
-        <Move3d className="w-3.5 h-3.5" />
-        <span>Interactive Navigator</span>
-      </div>
+    <div className="mt-20 text-center select-none">
       <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-2">
         Explore My Journey
       </h3>
-      <p className="text-slate-400 text-xs sm:text-sm mb-8 font-mono">
-        Click any facet to inspect credentials and domains
+      <p className="text-slate-400 text-xs sm:text-sm mb-10 font-mono flex items-center justify-center gap-1.5">
+        <Move3d className="w-4 h-4 text-cyan-400" />
+        <span>Drag to explore</span>
       </p>
 
-      {/* Glowing Hexagonal Pedestal */}
-      <div className="relative max-w-2xl mx-auto p-6 rounded-3xl bg-[#080d24]/90 backdrop-blur-2xl border border-purple-500/30 shadow-[0_0_50px_rgba(168,85,247,0.2)]">
-        {/* Glow halo */}
-        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-transparent blur-xl pointer-events-none" />
+      {/* 3D Interactive Rotating Cube on Glowing Circular Pedestal matching Slide 4 */}
+      <div
+        className="relative w-72 h-72 mx-auto cursor-grab active:cursor-grabbing flex items-center justify-center"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        style={{ perspective: '1000px' }}
+      >
+        {/* The 3D Cube Container */}
+        <div
+          className="relative w-40 h-40 transition-transform duration-75"
+          style={{
+            transformStyle: 'preserve-3d',
+            transform: `rotateX(${rotX}deg) rotateY(${rotY}deg)`,
+          }}
+        >
+          {/* Front Face: Projects */}
+          <div
+            className="absolute inset-0 rounded-2xl bg-[#080d24]/90 border-2 border-cyan-400/80 p-4 flex flex-col items-center justify-center text-cyan-300 shadow-[0_0_20px_rgba(0,240,255,0.4)] backdrop-blur-md"
+            style={{ transform: 'translateZ(80px)' }}
+          >
+            <Code2 className="w-8 h-8 mb-2 text-cyan-300" />
+            <span className="text-sm font-bold font-mono">Projects</span>
+            <span className="text-[10px] text-slate-400 mt-1">4 Core Works</span>
+          </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 relative z-10 mb-6">
-          {faces.map((f) => {
-            const Icon = f.icon;
-            const isActive = activeFace === f.id;
-            return (
-              <button
-                key={f.id}
-                onClick={() => setActiveFace(f.id)}
-                className={`p-4 rounded-2xl border flex flex-col items-center gap-2 transition-all duration-300 ${
-                  isActive
-                    ? 'bg-gradient-to-b from-purple-500/25 to-cyan-500/25 border-cyan-400 shadow-[0_0_20px_rgba(0,240,255,0.4)] scale-105'
-                    : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 text-slate-400'
-                }`}
-              >
-                <div className={`p-2.5 rounded-xl bg-slate-950/80 border ${f.color}`}>
-                  <Icon className="w-5 h-5" />
-                </div>
-                <span className={`text-xs font-bold font-mono ${isActive ? 'text-white' : 'text-slate-300'}`}>
-                  {f.title}
-                </span>
-              </button>
-            );
-          })}
+          {/* Right Face: Experience */}
+          <div
+            className="absolute inset-0 rounded-2xl bg-[#140a28]/90 border-2 border-purple-400/80 p-4 flex flex-col items-center justify-center text-purple-300 shadow-[0_0_20px_rgba(168,85,247,0.4)] backdrop-blur-md"
+            style={{ transform: 'rotateY(90deg) translateZ(80px)' }}
+          >
+            <Briefcase className="w-8 h-8 mb-2 text-purple-300" />
+            <span className="text-sm font-bold font-mono">Experience</span>
+            <span className="text-[10px] text-slate-400 mt-1">3 Internships</span>
+          </div>
+
+          {/* Back Face: Skills */}
+          <div
+            className="absolute inset-0 rounded-2xl bg-[#041624]/90 border-2 border-sky-400/80 p-4 flex flex-col items-center justify-center text-sky-300 shadow-[0_0_20px_rgba(56,189,248,0.4)] backdrop-blur-md"
+            style={{ transform: 'rotateY(180deg) translateZ(80px)' }}
+          >
+            <Sparkles className="w-8 h-8 mb-2 text-sky-300" />
+            <span className="text-sm font-bold font-mono">Skills</span>
+            <span className="text-[10px] text-slate-400 mt-1">MERN, AI, DSA</span>
+          </div>
+
+          {/* Left Face: Certificates */}
+          <div
+            className="absolute inset-0 rounded-2xl bg-[#1a0822]/90 border-2 border-pink-400/80 p-4 flex flex-col items-center justify-center text-pink-300 shadow-[0_0_20px_rgba(236,72,153,0.4)] backdrop-blur-md"
+            style={{ transform: 'rotateY(-90deg) translateZ(80px)' }}
+          >
+            <Award className="w-8 h-8 mb-2 text-pink-300" />
+            <span className="text-sm font-bold font-mono">Certificates</span>
+            <span className="text-[10px] text-slate-400 mt-1">11+ Verified</span>
+          </div>
+
+          {/* Top Face */}
+          <div
+            className="absolute inset-0 rounded-2xl bg-[#070b1e]/90 border-2 border-cyan-300/40 p-2 flex items-center justify-center text-cyan-200"
+            style={{ transform: 'rotateX(90deg) translateZ(80px)' }}
+          >
+            <span className="text-xs font-mono font-bold">MSP 2026</span>
+          </div>
+
+          {/* Bottom Face */}
+          <div
+            className="absolute inset-0 rounded-2xl bg-[#070b1e]/90 border-2 border-purple-300/40"
+            style={{ transform: 'rotateX(-90deg) translateZ(80px)' }}
+          />
         </div>
 
-        {/* Selected Facet Detail */}
-        {faces
-          .filter((f) => f.id === activeFace)
-          .map((f) => (
-            <div
-              key={f.id}
-              className="p-5 rounded-2xl bg-[#040714] border border-cyan-500/30 text-left flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-fadeIn"
-            >
-              <div>
-                <span className="text-xs font-mono text-cyan-400 uppercase tracking-wider font-semibold">
-                  Domain: {f.title}
-                </span>
-                <p className="text-sm text-slate-200 mt-1">
-                  {f.desc}
-                </p>
-              </div>
-              <a
-                href={`#${f.id === 'experience' || f.id === 'skills' ? 'skills-experience' : f.id === 'certificates' ? 'certificates-resume' : f.id}`}
-                className="px-4 py-2 rounded-xl text-xs font-semibold bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 hover:bg-cyan-500 hover:text-slate-950 transition-all text-center whitespace-nowrap self-start sm:self-center"
-              >
-                Jump to Section →
-              </a>
-            </div>
-          ))}
+        {/* Glowing Circular Pedestal Beneath Cube */}
+        <div className="absolute -bottom-8 w-60 h-10 rounded-[100%] border-2 border-cyan-400/60 bg-gradient-to-r from-cyan-400/20 via-purple-500/20 to-cyan-400/20 blur-[2px] shadow-[0_0_35px_#00f0ff] pointer-events-none" />
+      </div>
+
+      {/* Quick Jump Bar */}
+      <div className="flex flex-wrap justify-center gap-3 mt-14 max-w-xl mx-auto">
+        <a href="#projects" className="px-4 py-1.5 rounded-full text-xs font-mono bg-cyan-500/15 border border-cyan-400/40 text-cyan-300 hover:bg-cyan-500 hover:text-slate-950 transition-all">
+          View Projects →
+        </a>
+        <a href="#skills-experience" className="px-4 py-1.5 rounded-full text-xs font-mono bg-purple-500/15 border border-purple-400/40 text-purple-300 hover:bg-purple-500 hover:text-white transition-all">
+          View Skills & Timeline →
+        </a>
+        <a href="#certificates-resume" className="px-4 py-1.5 rounded-full text-xs font-mono bg-pink-500/15 border border-pink-400/40 text-pink-300 hover:bg-pink-500 hover:text-white transition-all">
+          View Certificates →
+        </a>
       </div>
     </div>
   );
