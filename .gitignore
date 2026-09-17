@@ -1,0 +1,13 @@
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+.env
+.env.*
+builder_helper.py
+write_files.py
+run_p1.py
+part1.py
+make_app.py
+resume_extracted.txt
